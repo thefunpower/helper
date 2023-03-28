@@ -32,13 +32,8 @@ function curl_aliyun($url,$bodys = '',$method='POST')
     }
     curl_setopt($curl, CURLOPT_URL, $url);
     $exec = $data = curl_exec($curl);   
-    $data = json_decode($data,true);     
-    if(is_array($data)){ 
-        if($data['error_msg']){
-            self::$msg = $data['error_msg'];
-        }
-    }else{
-        self::$msg = $exec;
-    }
+    if(is_json($data)){
+        $data = json_decode($data,true);      
+    }    
     return $data; 
 }
