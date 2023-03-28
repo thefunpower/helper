@@ -1,0 +1,21 @@
+{
+    "name": "thefunpower/helper",
+    "type": "library",
+    "description": "helper",
+    "keywords": ["php"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ken.sun",
+            "email": "sunkangchina@163.com" 
+        }
+    ],
+    "require": {
+        "php": ">=7.1"
+    }, 
+    "autoload": { 
+        "files": [ 
+            "./helper.php"
+        ]
+    }
+}
