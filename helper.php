@@ -26,14 +26,14 @@ function curl_aliyun($url,$bodys = '',$method='POST')
             curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);    
         }else{
             if(strpos($url,'?') === false){
-                $url = $url.'?'.build_query($bodys);
+                $url = $url.'?'.http_build_query($bodys);
             }
         }        
-    }
+    } 
     curl_setopt($curl, CURLOPT_URL, $url);
-    $exec = $data = curl_exec($curl);   
+    $data = curl_exec($curl);   
     if(is_json($data)){
         $data = json_decode($data,true);      
-    }    
+    }     
     return $data; 
 }
