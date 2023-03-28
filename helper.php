@@ -2,7 +2,7 @@
 /**
 * 调用阿里云
 */
-function curl_aliyun($url,$bodys = '',$method='POST')
+function curl_aliyun($url,$bodys = [],$method='POST')
 { 
     $appcode = get_config('aliyun_market_AppCode');  
     $headers = array(); 
@@ -25,8 +25,15 @@ function curl_aliyun($url,$bodys = '',$method='POST')
         if($method == 'POST'){
             curl_setopt($curl, CURLOPT_POSTFIELDS, $bodys);    
         }else{
-            if(strpos($url,'?') === false){
-                $url = $url.'?'.http_build_query($bodys);
+            $str = '';
+            foreach($bodys as $k=>$v){
+                $str .=$k.'='.$v."&";
+            }
+            $str = substr($str,0,-1);
+            if(strpos($url,'?') === false){ 
+                $url = $url.'?'.$str;
+            }else{
+                $url = $url."&".$str;
             }
         }        
     } 
