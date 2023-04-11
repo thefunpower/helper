@@ -16,6 +16,9 @@
     "autoload": { 
         "files": [ 
             "./helper.php"
-        ]
+        ],
+        "psr-4": {
+            "helper_v3\\": "./helper_v3/"
+        }
     }
 }
