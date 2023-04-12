@@ -11,7 +11,7 @@
         }
     ],
     "require": { 
-        "mpdf/mpdf": "^8.1",
+        "mpdf/mpdf": "^8.0",
         "spatie/pdf-to-image": "^2.2",
         "iio/libmergepdf": "^3.1"
     }, 
