@@ -27,7 +27,7 @@ class Pdf{
         } else {
             $save_name = $save_name . '.pdf';
         }
-        $path = '/uploads/pdfmerger/' . date('Ymd') . '/';
+        $path = 'uploads/pdfmerger/' . date('Ymd') . '/';
         $dir  = PATH . $path;
         create_dir_if_not_exists([$dir]);
         $new_file = $dir . $save_name;  
@@ -85,7 +85,7 @@ class Pdf{
      */
     public static function mpdfInit($font_size = 9,$more_options = [])
     {
-        $tempDir = PATH . '/data/runtime';
+        $tempDir = PATH . 'data/runtime';
         if (!is_dir($tempDir)) {
             mkdir($tempDir, 0777, true);
         }
