@@ -11,6 +11,8 @@ yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageM
 ~~~
 
 ### 生成PDF
+
+https://mpdf.github.io/installation-setup/installation-v7-x.html
 ~~~
 use helper_v3\Pdf;
 
@@ -28,6 +30,57 @@ $input = [
 $new_name = 'test';
 echo Pdf::merger($input,$new_name);
 exit;
+~~~
+
+### 生成PDF table
+~~~
+$html = '
+<style> 
+table{
+    width: 100%;
+    text-align:left;
+    margin: 0 auto;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+} 
+th,td {
+    border: 1px solid #000000;
+    text-align: center;
+}
+</style>
+<table   cellspacing="0" cellpadding="0" border="0"   >
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td colspan="2">Larry the Bird</td>
+      <td>@twitter</td>
+    </tr>
+  </tbody>
+</table>';
+    $mpdf = Pdf::mpdfInit();
+    $mpdf->shrink_tables_to_fit = 1;
+    $mpdf->WriteHTML($html);
+    $mpdf->Output();
 ~~~
 
 ## Xls 
