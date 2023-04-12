@@ -192,14 +192,11 @@ class Pdf{
          foreach($output['InfoBegin'] as $v){
              $header[$v['InfoKey']] = $v['InfoValue'];
          }
-         $PageMediaDimensions = $output['PageMediaBegin'][0]['PageMediaDimensions'];
-         $output = [];
+         $PageMediaDimensions = $output['PageMediaBegin'][0]['PageMediaDimensions']; 
          $output['header'] = $header;
          $output['dimensions'] = explode(" ",$PageMediaDimensions);
          //2是横版，1是竖版
-         $output['dimensions_type'] = $output['dimensions'][0] > $output['dimensions'][1]?2:1;  
-         //页数   
-         $output['pages'] = $output['NumberOfPages'];
+         $output['dimensions_type'] = $output['dimensions'][0] > $output['dimensions'][1]?2:1;   
          return $output;
     } 
     /**
@@ -242,8 +239,8 @@ class Pdf{
         if(!$flag){
             return;
         } 
-        $this->cmd .= " ".$file."  -o  ".$output;
-        exec($this->cmd);
+        $cmd .= " ".$file."  -o  ".$output;
+        exec($cmd);
     } 
 
 
