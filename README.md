@@ -5,6 +5,13 @@
 define("PATH",__DIR__.'/');
 ~~~
 
+## PDF
+~~~ 
+yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageMagick ImageMagick-devel  ghostscript -y
+~~~
+
+
+
 ## Xls 
 ~~~
 composer require phpoffice/phpspreadsheet
