@@ -64,7 +64,7 @@ class Pdf{
     /**
      * 合并PDF,支持图片与pdf文件一起合并
      */
-    public static function all($files, $output)
+    public static function merger2($files, $output)
     {
         foreach ($files as $k => $v) {
             $ext = strtolower(substr($v, strrpos($v, '.') + 1));
