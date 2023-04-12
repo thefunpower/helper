@@ -10,6 +10,15 @@ define("PATH",__DIR__.'/');
 yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageMagick ImageMagick-devel  ghostscript -y
 ~~~
 
+### 生成PDF
+~~~
+use helper_v3\Pdf;
+
+$mpdf = Pdf::mpdfInit();
+$mpdf->WriteHTML('<h1>Hello world!</h1>');
+$mpdf->Output();
+~~~
+
 
 
 ## Xls 
@@ -21,6 +30,8 @@ composer require phpoffice/phpspreadsheet
 
 ### 生成xls
 ~~~ 
+use helper_v3\Xls;
+
 $all = db_get("catalog_product",'*');
 
 foreach($all as $v){

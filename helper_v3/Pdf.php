@@ -8,6 +8,9 @@ class Pdf{
 	/**
      * 合并pdf
      * 输入的数组必须是.pdf格式
+     * @param $data   本地pdf文件绝对路径
+     * @param $save_name 合并后的文件名
+     * @return string uploads/...相对路径文件
      */
     public static function merger($data = [], $save_name = null)
     {
@@ -40,6 +43,8 @@ class Pdf{
 	
 	/**
      * 图片转PDF
+     * @param  $input  PDF绝对路径 
+     * @param  $output  PDF绝对路径 
      */
     public static function imageToPdf($input, $output)
     {
@@ -64,8 +69,11 @@ class Pdf{
     
     /**
      * 合并PDF,支持图片与pdf文件一起合并
+     *
+     * @param  $files   PDF绝对路径 
+     * @param  $output  PDF绝对路径 
      */
-    public static function merger2($files, $output)
+    public static function merger2($files = [], $output)
     {
         foreach ($files as $k => $v) {
             $ext = strtolower(substr($v, strrpos($v, '.') + 1));
@@ -162,8 +170,7 @@ class Pdf{
             )
         2是横版，1是竖版
         [dimensions_type] => 2
-    )
-
+    ) 
      */
     public static function getInfo($file){ 
          $cmd = "pdftk ".$file." dump_data ";
