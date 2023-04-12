@@ -3,6 +3,7 @@ namespace helper_v3;
 use Mpdf\Config\ConfigVariables;
 use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
+use iio\libmergepdf\Merger; 
 class Pdf{  
 	/**
      * 合并pdf
