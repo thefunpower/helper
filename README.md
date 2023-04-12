@@ -19,7 +19,16 @@ $mpdf->WriteHTML('<h1>Hello world!</h1>');
 $mpdf->Output();
 ~~~
 
-
+### 合并PDF
+~~~
+$input = [
+    PATH.'uploads/1.pdf',
+    PATH.'uploads/2.pdf',
+];
+$new_name = 'test';
+echo Pdf::merger($input,$new_name);
+exit;
+~~~
 
 ## Xls 
 ~~~
