@@ -5,6 +5,25 @@
 define("PATH",__DIR__.'/');
 ~~~
 
+## Ftp
+
+把本地文件同步到FTP上。
+
+如果FTP上目录文件已存在，将会被替换。
+
+~~~
+use helper_v3\Ftp;
+$ftp = Ftp::start([
+    'host' =>'IP地址',
+    'user' =>'帐号',
+    'pwd'  =>'密码',
+    'port' =>'端口，默认21', 
+]);  
+
+Ftp::put_all(__DIR__.'/uploads','uploads');
+Ftp::end();
+~~~
+
 ## PDF
 ~~~ 
 yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageMagick ImageMagick-devel  ghostscript -y
