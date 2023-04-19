@@ -6,6 +6,7 @@ define("PATH",__DIR__.'/');
 ~~~
 
 ## Ftp
+php.ini中开启`ftp`扩展
 
 把本地文件同步到FTP上。
 
@@ -23,6 +24,8 @@ $ftp = Ftp::start([
 Ftp::put_all(__DIR__.'/uploads','uploads');
 Ftp::end();
 ~~~
+
+更多方法 https://github.com/Nicolab/php-ftp-client
 
 ## PDF
 ~~~ 
