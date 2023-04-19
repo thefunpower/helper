@@ -1,3 +1,10 @@
+# 安装
+
+在composer.json中添加
+~~~
+"thefunpower/helper": "dev-main"
+~~~
+
 # 助手工具类或函数
 
 需要定义`PATH`目录
