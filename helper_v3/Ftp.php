@@ -1,7 +1,16 @@
-<?php   
+<?php 
+/*
+    Copyright (c) 2021-2031, All rights reserved.
+    This is NOT a freeware
+    LICENSE: https://github.com/thefunpower/core/blob/main/LICENSE.md 
+    Connect Email: sunkangchina@163.com
+*/  
 namespace helper_v3;  
-class Ftp extends \FtpClient\FtpClient {
+class Ftp{
    public static $ftp;
+   /**
+   * 初始化
+   */
    public static function start($arr = []){
       $host  = $arr['host'];
       $user  = $arr['user'];
@@ -12,7 +21,7 @@ class Ftp extends \FtpClient\FtpClient {
         $pasv  = $arr['pasv'];
       }
       $port  = $arr['port']?:21; 
-      $ftp   = new self();
+      $ftp   = new FtpClient();
       $ftp->connect($host,false, $port);
       $ftp->login($user, $pwd); 
       if($pasv){
@@ -26,17 +35,20 @@ class Ftp extends \FtpClient\FtpClient {
    * @param $source_directory = __DIR__.'/uploads'
    * @param $target_directory 如uploads
    */
-   public static function put_all($source_directory,$target_directory,$chmod=777){
+   public static function put_all($source_directory,$target_directory=''){
       $ftp = self::$ftp; 
       if(!$ftp->isDir($target_directory)){
         $ftp->mkdir($target_directory);
-      }
-      $ftp->chmod($chmod, $target_directory);
+      } 
       $ftp->putAll($source_directory, $target_directory,FTP_BINARY);
-   }
+   } 
 
    public static function end(){
       self::$ftp->close();
    }
   
+}
+
+class FtpClient extends \FtpClient\FtpClient {
+
 }

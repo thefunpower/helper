@@ -20,10 +20,14 @@ $ftp = Ftp::start([
     'pwd'  =>'密码',
     'port' =>'端口，默认21', 
 ]);  
-
-Ftp::put_all(__DIR__.'/uploads','uploads');
+//上传到根目录
+Ftp::put_all(__DIR__.'/uploads');
+//或上传到指定目录
+//Ftp::put_all(__DIR__.'/uploads','uploads');
 Ftp::end();
 ~~~
+
+
 
 更多方法 https://github.com/Nicolab/php-ftp-client
 
