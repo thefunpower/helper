@@ -1,4 +1,24 @@
 <?php 
+
+if(!function_exists('rpc_client')){
+    function rpc_client($url,$is_remote = false){
+        return helper_v3\Rpc::client($url,$is_remote);
+    }
+}
+
+if(!function_exists('rpc_server')){
+    function rpc_server($class){
+        helper_v3\Rpc::server($class);
+    }
+}
+
+if(!function_exists('rpc_token')){
+    function rpc_token(){
+        return helper_v3\Rpc::get_http_author();
+    }
+}
+
+
 /**
 * 调用阿里云
 */

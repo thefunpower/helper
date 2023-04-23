@@ -12,6 +12,25 @@
 define("PATH",__DIR__.'/');
 ~~~
 
+## RPC
+
+服务端
+~~~
+class ServerGetUser{
+    public function getInfo($name = 'abc'){
+        return ['welcome'=>$name,'token'=>rpc_token()];
+    }
+}
+rpc_server("ServerGetUser");
+~~~
+
+客户端
+~~~
+$client = rpc_client("http://127.0.0.1:5000/rpc.php");
+$info = $client->getInfo("test");
+print_r($info);
+~~~ 
+
 ## Ftp
 php.ini中开启`ftp`扩展
 
