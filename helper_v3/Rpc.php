@@ -13,7 +13,6 @@ class Rpc{
 	public static function get_http_author(){
 		return trim(substr($_SERVER['HTTP_AUTHORIZATION'],strlen('Bearer')));
 	}
-
 	/**
 	* 客户端请求
 	*/
@@ -25,14 +24,21 @@ class Rpc{
     	]; 
 	    $client->SetOpt(YAR_OPT_HEADER, $opt); 
 	    if(!$is_remote){
-	    	$client->SetOpt(YAR_OPT_RESOLVE, array("host:80:127.0.0.1"));    	
+	    	$host = $remote_url;
+	    	$host = str_replace("https://","",$host);
+	    	$host = str_replace("http://","",$host);
+	    	$host = substr($host,0,strpos($host,'/'));  
+	    	if(strpos($host,'127.0.0.1') === false){
+	    		$port = '80';
+	    		$client->SetOpt(YAR_OPT_RESOLVE, array("$host:$port:127.0.0.1"));    		
+	    	}	    	
 	    }	    
 	    if($token && YAR_VERSION >= '2.3.0'){
 	        $client->setOpt(YAR_OPT_PROVIDER, "provider");
 	        $client->setOpt(YAR_OPT_TOKEN, $token);   
 	    } 
 	    $client->SetOpt(YAR_OPT_CONNECT_TIMEOUT, 6000);  
-	    return $client; 
+	    return $client;
 	}
 	/**
 	* 服务端
