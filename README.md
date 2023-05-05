@@ -195,3 +195,9 @@ Xls::$merge = [
 ];
 Xls::create($title, $values, $name, FALSE);
 ~~~
+
+
+
+### 开源协议 
+
+The [MIT](LICENSE) License (MIT)
