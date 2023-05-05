@@ -10,10 +10,7 @@
             "email": "sunkangchina@163.com" 
         }
     ],
-    "require": { 
-        "mpdf/mpdf": "^8.1",
-        "spatie/pdf-to-image": "^2.2",
-        "iio/libmergepdf": "^3.1",
+    "require": {  
         "nicolab/php-ftp-client": "^2.0"
     }, 
     "autoload": { 

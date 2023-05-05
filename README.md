@@ -3,6 +3,9 @@
 在composer.json中添加
 ~~~
 "thefunpower/helper": "dev-main"
+"mpdf/mpdf": "^8.1",
+"spatie/pdf-to-image": "^2.2",
+"iio/libmergepdf": "^3.1",
 ~~~
 
 # 助手工具类或函数
