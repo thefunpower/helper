@@ -11,7 +11,7 @@
         }
     ],
     "require": {  
-        "nicolab/php-ftp-client": "^2.0"
+        
     }, 
     "autoload": { 
         "files": [ 
