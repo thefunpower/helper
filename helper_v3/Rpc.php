@@ -5,20 +5,21 @@
 */ 
 namespace helper_v3;
 class Rpc{  
+	
+	public static $token;
 	/**
 	* 取TOKEN
 	*/
 	public static function get_http_author(){
 		return trim(substr($_SERVER['HTTP_AUTHORIZATION'],strlen('Bearer')));
-	}
+	} 
 	/**
 	* 客户端请求
 	*/
 	public static function client($remote_url,$is_remote = false){
 		$client = new \Yar_Client($remote_url);   
-		$token = '';
 		$opt = [
-        	"Authorization: Bearer ".$token,  
+        	"Authorization: Bearer ".self::$token,  
     	]; 
 	    $client->SetOpt(YAR_OPT_HEADER, $opt); 
 	    if(!$is_remote){
@@ -35,6 +36,7 @@ class Rpc{
 	        $client->setOpt(YAR_OPT_PROVIDER, "provider");
 	        $client->setOpt(YAR_OPT_TOKEN, $token);   
 	    } 
+	    $client->SetOpt(YAR_OPT_PERSISTENT, 1);
 	    $client->SetOpt(YAR_OPT_CONNECT_TIMEOUT, 6000);  
 	    return $client;
 	}
