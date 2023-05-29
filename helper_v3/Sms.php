@@ -49,6 +49,7 @@ class Sms
         if ($res['RetCode'] == 0) { 
             $ret = [
                 'code' => 0,
+                'type' => 'success',
                 'msg'  => '发送成功',
                 'data' => [ 
                     'title' => $phone,
@@ -60,6 +61,7 @@ class Sms
         } else {  
             $ret = [
                 'code' => 250,
+                'type' => 'error',
                 'msg'  => $msg,
                 'data' => [ 
                     'title' => $phone,
