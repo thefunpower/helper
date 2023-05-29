@@ -25,7 +25,7 @@ if(!function_exists('rpc_token')){
 function curl_aliyun($url,$bodys = '',$method='POST')
 { 
     $curl = curl_init();
-    $appcode = get_config('aliyun_market_AppCode');  
+    $appcode = get_config('aliyun_m_code');  
     $headers = array(); 
     array_push($headers, "Authorization:APPCODE " . trim($appcode));
     array_push($headers, "Content-Type".":"."application/json; charset=UTF-8");
