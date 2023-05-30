@@ -97,6 +97,9 @@ class Pdf{
      */
     public static function mpdfInit($font_size = 9,$more_options = [])
     {
+        if(!$more_options && is_array($font_size)){
+            $more_options = $font_size;
+        }
         $tempDir = PATH . 'data/runtime';
         if (!is_dir($tempDir)) {
             mkdir($tempDir, 0777, true);
