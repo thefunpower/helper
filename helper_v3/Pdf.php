@@ -109,7 +109,7 @@ class Pdf{
             'tempDir' => $tempDir,
             'default_font_size' => $font_size,
             'fontDir' => array_merge($fontDirs, [
-                PATH . 'data/font',
+                HELPER_DIR . '/font',
             ]),
             'fontdata' => $fontData + [
                 'simfang' => [

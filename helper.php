@@ -1,5 +1,5 @@
-<?php 
-
+<?php  
+define("HELPER_DIR",__DIR__);
 if(!function_exists('rpc_client')){
     function rpc_client($url,$is_remote = false){
         return helper_v3\Rpc::client($url,$is_remote);
