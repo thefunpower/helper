@@ -317,3 +317,12 @@ function curl_aliyun($url,$bodys = '',$method='POST')
         }
     } 
 }
+
+
+function success_data($data,$msg = ''){
+    return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg];
+}
+
+function error_data($msg){
+    return ['msg'=>$msg,'code'=>250,'type'=>'error'];
+}
