@@ -50,7 +50,7 @@ function predis_add_geo($key,$arr = []){
     $redis->multi();
     foreach($arr as $v){
         if($key && $v['lat'] && $v['lng'] && $v['title']){
-            $redis->geoadd($key, $v['lat'], $v['lng'], $v['title']);
+            $redis->geoadd($key, $v['lng'], $v['lat'], $v['title']);
         }  
     } 
     $redis->exec();
@@ -104,8 +104,8 @@ function predis_geo_pos($key,$title = [],$to_fixed = 6){
      $list = [];
      foreach($res as $i=>$v){
         $vv = [
-            'lat'=>bcmul($v[0],1,$to_fixed),
-            'lng'=>bcmul($v[1],1,$to_fixed),
+            'lng'=>bcmul($v[0],1,$to_fixed),
+            'lat'=>bcmul($v[1],1,$to_fixed),
         ];
         $list[$title[$i]] = $vv;
      }
