@@ -80,9 +80,8 @@ function predis_delete_geo($key,$arr = []){
  * pr(predis_get_pager('places', 116.403958, 39.915049));
  * http://redisdoc.com/geo/georadius.html
  */
-function predis_get_pager($key,$lat,$lng,$juli = 1000,$sort = 'ASC',$to_fixed=2){
-    $redis = predis();
-    $juli = bcmul($juli,1000,2);   
+function predis_get_pager($key,$lat,$lng,$juli = 2,$sort = 'ASC',$to_fixed=2){
+    $redis = predis();   
     $arr = $redis->georadius($key,$lat,$lng, $juli, 'km', [
         'withdist' => true, 
         'sort' =>$sort, 
