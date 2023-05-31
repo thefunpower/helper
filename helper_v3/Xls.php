@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx; 
 class Xls
 {
-    public static $base_url = 'uploads/tmp/xls/';
+    public static $base_url = '/uploads/tmp/xls/';
     public static $works = [];
     public static $sheet_width = [];
     public static $label = "";
