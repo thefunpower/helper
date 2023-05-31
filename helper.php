@@ -39,8 +39,8 @@ function predis($host='',$port='',$auth=''){
  * 添加位置信息
 predis_add_geo('places',[
     [ 
-        'lat'=>'116.397128',
-        'lng'=>'39.916527',
+        'lng'=>'116.397128',
+        'lat'=>'39.916527',
         'title'=>'北京天安门'
     ], 
 ]); 
