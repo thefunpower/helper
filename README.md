@@ -7,10 +7,20 @@
 
 # 助手工具类或函数
 
-需要定义`PATH`目录
+需要定义`PATH`目录，项目的根目录
 ~~~
 define("PATH",__DIR__.'/');
 ~~~
+
+需要定义`WWW_PATH`目录，网站访问的目录，有时PATH与WWW_PATH是一样的
+~~~
+define("WWW_PATH",__DIR__.'/');
+~~~
+
+确保有`data`  `uploads`两个目录且可写.
+
+data在根目录 uploads在网站访问的目录
+
 
 ## Predis GEO
 连接 
