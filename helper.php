@@ -1,5 +1,7 @@
 <?php  
 define("HELPER_DIR",__DIR__);
+
+
 if(!function_exists('rpc_client')){
     function rpc_client($url,$is_remote = false){
         return helper_v3\Rpc::client($url,$is_remote);
@@ -18,6 +20,121 @@ if(!function_exists('rpc_token')){
     }
 }
 
+/**
+ * redis
+ */
+function predis($host='',$port='',$auth=''){
+    static $redis;
+    if($redis){
+        return $redis;
+    } 
+    $redis = new Predis\Client([
+        'scheme' => 'tcp',
+        'host'   => $host,
+        'port'   => $port,
+        'password'=> $auth,
+    ]);
+    return $redis;
+}
+/**
+ * 添加位置信息
+predis_add_geo('places',[
+    [ 
+        'lat'=>'116.397128',
+        'lng'=>'39.916527',
+        'title'=>'北京天安门'
+    ], 
+]); 
+ */
+function predis_add_geo($key,$arr = []){
+    $redis = predis();
+    $redis->multi();
+    foreach($arr as $v){
+        if($key && $v['lat'] && $v['lng'] && $v['title']){
+            $redis->geoadd($key, $v['lat'], $v['lng'], $v['title']);
+        }  
+    } 
+    $redis->exec();
+}
+/**
+ * 删除位置信息
+ * 
+predis_delete_geo('places',[
+    [
+        '北京天安门'
+    ], 
+]);
+ */
+function predis_delete_geo($key,$arr = []){
+    $redis = predis();
+    $redis->multi();
+    foreach($arr as $v){
+        if($key && $v){
+           $redis->zrem($key,  $v);
+        } 
+    }  
+    $redis->exec();
+}
+
+/**
+ * 返回附近的地理位置
+ * pr(predis_get_pager('places', 116.403958, 39.915049));
+ * http://redisdoc.com/geo/georadius.html
+ */
+function predis_get_pager($key,$lat,$lng,$juli = 1000,$sort = 'ASC',$to_fixed=2){
+    $redis = predis();
+    $juli = bcmul($juli,1000,2);   
+    $arr = $redis->georadius($key,$lat,$lng, $juli, 'km', [
+        'withdist' => true, 
+        'sort' =>$sort, 
+    ]); 
+    $list =  array_to_pager($arr); 
+    $new_list = [];
+    foreach($list['data'] as $v){
+        $new_list[$v[0]] = bcmul($v[1],1,$to_fixed);
+    }
+    $list['data'] = $new_list;
+    return $list;
+}
+/**
+ * 取lat lng
+ */
+function predis_geo_pos($key,$title = [],$to_fixed = 6){
+     $redis = predis(); 
+     $res = $redis->geoPos($key, $title);
+     $list = [];
+     foreach($res as $i=>$v){
+        $vv = [
+            'lat'=>bcmul($v[0],1,$to_fixed),
+            'lng'=>bcmul($v[1],1,$to_fixed),
+        ];
+        $list[$title[$i]] = $vv;
+     }
+     return $list;
+}
+/** 
+ * 分组分页
+ */
+function array_to_pager($arr)
+{
+    $page = g('page')?:1;
+    $per_page = g('per_page')?:20;
+    $total = count($arr);
+    $last_page = ceil($total/$per_page);
+    if($page>$last_page){
+        $page = $last_page;
+    }
+    $arr   = array_slice($arr, ($page - 1) * $per_page, $per_page);
+    $list  = [
+        'current_page'=>$page,
+        'data'=>$arr,
+        'last_page'=>$last_page,
+        'per_page'=>$per_page,
+        'total'=>$total,
+        'total_cur'=>count($arr),
+    ];
+    return $list;
+}
 
 /**
 * 调用阿里云
