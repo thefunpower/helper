@@ -25,11 +25,5 @@
         "psr-4": {
             "helper_v3\\": "./helper_v3/"
         }
-    },
-    "config": { 
-        "platform": {
-            "ext-ftp": "0.0.0",
-            "ext-imagick": "0.0.0"
-        }
     }
 }
