@@ -11,17 +11,17 @@
         }
     ],
     "require": {  
-        "thefunpower/rpc_php": "^2",
+        "thefunpower/rpc_php": "dev-main",
         "nicolab/php-ftp-client": "^2.0",
         "mpdf/mpdf": "^8.1",
         "spatie/pdf-to-image": "^2.2",
         "iio/libmergepdf": "^3.1",
         "predis/predis": "^2.1"
-    }, 
+    },   
     "config": {
         "platform": { 
-            "ext-ftp": "*",
-            "ext-imagick":"*"
+            "ext-ftp": "0.0.0",
+            "ext-imagick": "0.0.0"
         }
     },
     "autoload": { 
