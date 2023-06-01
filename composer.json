@@ -17,12 +17,6 @@
         "spatie/pdf-to-image": "^2.2",
         "iio/libmergepdf": "^3.1",
         "predis/predis": "^2.1"
-    },   
-    "config": {
-        "platform": { 
-            "ext-ftp": "0.0.0",
-            "ext-imagick": "0.0.0"
-        }
     },
     "autoload": { 
         "files": [ 
