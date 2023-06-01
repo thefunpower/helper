@@ -1,24 +1,6 @@
 <?php  
-define("HELPER_DIR",__DIR__); 
-
-if(!function_exists('rpc_client')){
-    function rpc_client($url,$is_remote = false){
-        return helper_v3\Rpc::client($url,$is_remote);
-    }
-}
-
-if(!function_exists('rpc_server')){
-    function rpc_server($class){
-        helper_v3\Rpc::server($class);
-    }
-}
-
-if(!function_exists('rpc_token')){
-    function rpc_token(){
-        return helper_v3\Rpc::get_http_author();
-    }
-}
-
+//定义HELPER目录
+define("HELPER_DIR",__DIR__);   
 /**
  * redis
  */
@@ -317,11 +299,15 @@ function curl_aliyun($url,$bodys = '',$method='POST')
     } 
 }
 
-
+/**
+* 返回成功的json信息
+*/
 function success_data($data,$msg = ''){
     return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg];
 }
-
+/**
+* 返回失败的json信息
+*/
 function error_data($msg){
     return ['msg'=>$msg,'code'=>250,'type'=>'error'];
 }
