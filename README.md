@@ -128,7 +128,7 @@ $input = [
     PATH.'uploads/1.pdf',
     PATH.'uploads/2.pdf',
 ];
-$new_name = 'test';
+$new_file = '/完整路径/1.pdf';
 echo Pdf::merger($input,$new_name);
 exit;
 ~~~
