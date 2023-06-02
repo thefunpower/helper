@@ -58,7 +58,7 @@ class Pdf{
         }
         $dir = get_dir($output);
         create_dir_if_not_exists([$dir]);
-        $cmd = "convert $input $output"; 
+        $cmd = "convert $input $output &"; 
         exec($cmd,$exec_output); 
         return $output;
     }
@@ -81,7 +81,7 @@ class Pdf{
         foreach ($files as $v) {
             $in .= $v . " ";
         }
-        $cmd = "pdftk $in cat output $output";
+        $cmd = "pdftk $in cat output $output &";
         exec($cmd);
     }
 	/**
@@ -137,7 +137,7 @@ class Pdf{
         $md5 = md5($file);
         for($i=1;$i<=$pages;$i++){
             $name = '/'.$md5.'-'.$i.'.jpg';  
-            $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file;
+            $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file." &";
             exec($cmd);
             $files[] = $name;
         }   
@@ -243,7 +243,7 @@ class Pdf{
         if(!$flag){
             return;
         } 
-        $cmd .= " ".$file."  -o  ".$output;
+        $cmd .= " ".$file."  -o  ".$output." &";
         exec($cmd);
     } 
 
