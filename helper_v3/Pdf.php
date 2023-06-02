@@ -42,7 +42,7 @@ class Pdf{
      * @param  $input  PDF绝对路径 
      * @param  $output  PDF绝对路径 
      */
-    public static function imageToPdf($input, $output)
+    public static function image_to_pdf($input, $output)
     {
         if(is_array($input)){
             $arr = $input;
@@ -87,6 +87,9 @@ class Pdf{
 	/**
      * https://mpdf.github.io/ 
      */
+    public static function init($option = []){
+        return self::mpdfInit($option);
+    }
     public static function mpdfInit($font_size = '',$more_options = [])
     {
         if(!$more_options && is_array($font_size)){
@@ -130,9 +133,9 @@ class Pdf{
 	 * @param $file  本地PDF文件完整路径 
 	 * @param $output_path 导出目录 
 	 */
-	public static function covertToImage($file,$saveToDir){ 
+	public static function pdf_to_image($file,$saveToDir){ 
         create_dir_if_not_exists($saveToDir);
-        $pages = self::getPages($file);
+        $pages = self::get_pages($file);
         $files = [];  
         $list['page_count'] = $pages; 
         $md5 = md5($file);
@@ -140,7 +143,7 @@ class Pdf{
             $name = '/'.$md5.'-'.$i.'.jpg';  
             $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file;
             exec($cmd);
-            $files[] = $saveToDirNotCantainRootDir.$name;
+            $files[] = $name;
         }   
         return $files;
 	}
@@ -167,7 +170,7 @@ class Pdf{
         [dimensions_type] => 2
     ) 
      */
-    public static function getInfo($file){ 
+    public static function get_info($file){ 
          $cmd = "pdftk ".$file." dump_data ";
          exec($cmd,$out);
          $output  = [];
@@ -205,7 +208,7 @@ class Pdf{
     /**
      * 取pdf页数
      */
-    public  static function getPages($file){
+    public  static function get_pages($file){
          $cmd = "pdftk ".$file." dump_data | grep NumberOfPages";
          exec($cmd,$out);
          if($out[0]){
@@ -217,7 +220,7 @@ class Pdf{
 	/**
      * 设置标题等信息  
      */
-    public static function setInfo($file,$output,$arr = []){
+    public static function set_info($file,$output,$arr = []){
     	if(!file_exists($file)){
     		return;
     	}
