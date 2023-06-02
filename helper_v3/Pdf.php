@@ -81,6 +81,8 @@ class Pdf{
         foreach ($files as $v) {
             $in .= $v . " ";
         }
+        $dir = get_dir($output);
+        create_dir_if_not_exists([$dir]);
         $cmd = "pdftk $in cat output $output &";
         exec($cmd);
     }
