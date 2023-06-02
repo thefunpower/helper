@@ -13,10 +13,9 @@ class Pdf{
      * 合并pdf
      * 输入的数组必须是.pdf格式
      * @param $data   本地pdf文件绝对路径
-     * @param $save_name 合并后的文件名
-     * @return string uploads/...相对路径文件
+     * @param $new_file 合并后的文件名 
      */
-    public static function merger($data = [], $save_name = null)
+    public static function merger($data = [],$new_file)
     {
         foreach ($data as $k => $file) {
             if (!file_exists($file)) {
@@ -28,21 +27,14 @@ class Pdf{
         } 
         if(!$data){
             return;
-        } 
-        if (!$save_name) {
-            $save_name = uniqid(true).mt_rand(10000,99999) . '.pdf';
-        } else {
-            $save_name = $save_name . '.pdf';
-        }
-        $path = '/uploads/pdfmerger/' . date('Ymd') . '/';
-        $dir  = PATH . $path;
+        }  
+        $dir = get_dir($new_file);
         create_dir_if_not_exists([$dir]);
-        $new_file = $dir . $save_name;  
         $merger = new Merger;
         $merger->addIterator($data);
         $pdf    = $merger->merge();
         file_put_contents($new_file, $pdf);
-        return $path . $save_name;
+        return $new_file;
     }
 	
 	/**
@@ -95,12 +87,14 @@ class Pdf{
 	/**
      * https://mpdf.github.io/ 
      */
-    public static function mpdfInit($font_size = 9,$more_options = [])
+    public static function mpdfInit($font_size = '',$more_options = [])
     {
         if(!$more_options && is_array($font_size)){
             $more_options = $font_size;
         }
-        $tempDir = PATH . '/data/runtime';
+        $font_size = $font_size?:$more_options['font_size'];
+        $tempDir = $more_options['tempDir']?:PATH . '/data/runtime';
+        unset($more_options['tempDir']);
         if (!is_dir($tempDir)) {
             mkdir($tempDir, 0777, true);
         }
@@ -110,7 +104,7 @@ class Pdf{
         $fontData = $defaultFontConfig['fontdata'];
         $options_default = [
             'tempDir' => $tempDir,
-            'default_font_size' => $font_size,
+            'default_font_size' => $font_size?:9,
             'fontDir' => array_merge($fontDirs, [
                 HELPER_DIR . '/font',
             ]),
@@ -134,27 +128,21 @@ class Pdf{
      * PDF转图片
 	 * 
 	 * @param $file  本地PDF文件完整路径 
-	 * @param $output_path 导出目录  uploads/pdf_to_image/
+	 * @param $output_path 导出目录 
 	 */
-	public static function covertToImage($file,$output_path,$Quality = 100 ){
-		$saveToDir = PATH.$output_path;
-		create_dir_if_not_exists($saveToDir);
-		$pages = self::getPages($file);
-		$files = []; 
-		$pdf = new Pdf($file); 
-		$pdf->setOutputFormat('jpg');
-		$pages = $pdf->getNumberOfPages();
-		$pdf->setCompressionQuality($Quality);
-		$list['page_count'] = $pages;
-		$files = [];
-		$md5 = md5($file);
-		for($i=1;$i<=$pages;$i++){
-			$name = '/'.$md5.'-'.$i.'.jpg';  
-			$pdf->setPage($i)->saveImage($saveToDir.$name);
-			$files[] = $output_path.$name;
-		}  
-		$list['files'] = $files; 
-		return $list;
+	public static function covertToImage($file,$saveToDir){ 
+        create_dir_if_not_exists($saveToDir);
+        $pages = self::getPages($file);
+        $files = [];  
+        $list['page_count'] = $pages; 
+        $md5 = md5($file);
+        for($i=1;$i<=$pages;$i++){
+            $name = '/'.$md5.'-'.$i.'.jpg';  
+            $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file;
+            exec($cmd);
+            $files[] = $saveToDirNotCantainRootDir.$name;
+        }   
+        return $files;
 	}
 	 /**
      * 取PDF是横排还是竖排
@@ -222,6 +210,8 @@ class Pdf{
          exec($cmd,$out);
          if($out[0]){
             return trim(str_replace("NumberOfPages:","",$out[0]));   
+         }else{
+            return 1;
          }
     }
 	/**
