@@ -42,8 +42,10 @@ class Pdf{
      * @param  $input  PDF绝对路径 
      * @param  $output  PDF绝对路径 
      */
-    public static function image_to_pdf($input, $output)
+    public static function image_to_pdf($input, $output,$is_wait = false)
     {
+        global $covert_limit_memory;
+        $limit = $covert_limit_memory?:512;
         if(is_array($input)){
             $arr = $input;
             foreach($arr as $k=>$v){
@@ -58,7 +60,10 @@ class Pdf{
         }
         $dir = get_dir($output);
         create_dir_if_not_exists([$dir]);
-        $cmd = "convert $input $output &"; 
+        $cmd = "convert -limit memory ".$limit."MB $input $output "; 
+        if(!$is_wait){
+            $cmd = $cmd." &";
+        }
         exec($cmd,$exec_output); 
         return $output;
     }
@@ -74,7 +79,7 @@ class Pdf{
         foreach ($files as $k => $v) {
             $ext = strtolower(substr($v, strrpos($v, '.') + 1));
             if (in_array($ext, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
-                $files[$k] = self::image_to_pdf($v, $v . '.2pdf.pdf');
+                $files[$k] = self::image_to_pdf($v, $v . '.2pdf.pdf',true);
             }
         }
         $in = "";
