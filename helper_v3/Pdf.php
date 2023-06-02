@@ -74,7 +74,7 @@ class Pdf{
         foreach ($files as $k => $v) {
             $ext = strtolower(substr($v, strrpos($v, '.') + 1));
             if (in_array($ext, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
-                $files[$k] = self::imageToPdf($v, $v . '.2pdf.pdf');
+                $files[$k] = self::image_to_pdf($v, $v . '.2pdf.pdf');
             }
         }
         $in = "";
