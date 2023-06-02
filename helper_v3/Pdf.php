@@ -88,14 +88,10 @@ class Pdf{
      * https://mpdf.github.io/ 
      */
     public static function init($option = []){
-        return self::mpdfInit($option);
+        return self::mpdfInit('',$option);
     }
-    public static function mpdfInit($font_size = '',$more_options = [])
-    {
-        if(!$more_options && is_array($font_size)){
-            $more_options = $font_size;
-        }
-        $font_size = $font_size?:$more_options['font_size'];
+    public static function mpdfInit($font_size = 9,$more_options = [])
+    { 
         $tempDir = $more_options['tempDir']?:PATH . '/data/runtime';
         unset($more_options['tempDir']);
         if (!is_dir($tempDir)) {
