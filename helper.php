@@ -40,10 +40,8 @@ function predis_add_geo($key,$arr = []){
 /**
  * 删除位置信息
  * 
-predis_delete_geo('places',[
-    [
-        '北京天安门'
-    ], 
+predis_delete_geo('places',[ 
+  '北京天安门',
 ]);
  */
 function predis_delete_geo($key,$arr = []){
