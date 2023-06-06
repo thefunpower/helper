@@ -307,5 +307,9 @@ function success_data($data,$msg = ''){
 * 返回失败的json信息
 */
 function error_data($msg){
-    return ['msg'=>$msg,'code'=>250,'type'=>'error'];
+    if(is_string($msg)){
+        return ['msg'=>$msg,'code'=>250,'type'=>'error'];    
+    }else if(is_array($msg)){
+        return array_merge(['code'=>250,'type'=>'error'],$msg);
+    } 
 }
