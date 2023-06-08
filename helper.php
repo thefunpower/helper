@@ -301,7 +301,7 @@ function curl_aliyun($url,$bodys = '',$method='POST')
 * 返回成功的json信息
 */
 function success_data($data,$msg = ''){
-    return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg];
+    return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg,'host'=>host()];
 }
 /**
 * 返回失败的json信息
