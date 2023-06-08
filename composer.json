@@ -11,7 +11,7 @@
         }
     ],
     "require": {  
-        "thefunpower/rpc_php": "^1",
+        "thefunpower/rpc_php": "^2",
         "nicolab/php-ftp-client": "^2.0",
         "mpdf/mpdf": "^8.1", 
         "iio/libmergepdf": "^3.1",
