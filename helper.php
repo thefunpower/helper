@@ -202,7 +202,7 @@ function download_remote_file($url,$path='',$name = ''){
     $name = $name?:$remote_to_local_path.'/'.md5($url).'.'.get_ext_by_url($url);
     $path = $path?:WWW_PATH;
     $file = $path.$name;  
-    if(!file_exists($file)||filesize($file)<10){ 
+    if(!file_exists($file) || (file_exists($file) && filesize($file) < 10)){ 
         $context = get_remote_file($url);
         $dir = get_dir($file); 
         if(!is_dir($dir)){
