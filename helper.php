@@ -386,7 +386,7 @@ function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_con
 */
 function make_rand_code($node_id){
     $code = mt_rand(1000000,9999999);
-    $res =  db_get_one('rand_code',['code'=>$code,'status'=>0]);    
+    $res =  db_get('rand_code',['code'=>$code,'status'=>0,'LIMIT'=>1]);      
     if($res){
         make_rand_code($node_id);
     }else{
