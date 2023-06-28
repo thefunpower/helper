@@ -313,3 +313,55 @@ function error_data($msg){
         return array_merge(['code'=>250,'type'=>'error'],$msg);
     } 
 }
+
+/**
+* pathinfo 
+* /index.php/admin/auth/index?code=2 
+* 返回  admin/auth/index
+* 数组时返回 ['admin','auth','index']
+*/
+function get_path_info($return_array = false){
+    $script_name = $_SERVER['SCRIPT_NAME'];
+    $req_uri = $_SERVER['REQUEST_URI'];
+    $path_info = str_replace($script_name,'',$req_uri);
+    if(strpos($path_info,'?')!==false){
+        $path_info = substr($path_info,0,strpos($path_info,'?'));
+    }
+    if(substr($path_info,0,1)=='/'){
+        $path_info = substr($path_info,1);
+    }
+    if(substr($path_info,-1)=='/'){
+        $path_info = substr($path_info,0,-1);
+    }
+    if($return_array){
+        $arr = explode("/",$path_info);
+        if(!isset($arr[1])){
+            $arr[1] = 'index';
+        }
+        if(!isset($arr[2])){
+            $arr[2] = 'index';
+        }
+        return $arr;
+    }
+    return $path_info;
+}
+
+/**
+*  支持pathinfo路由
+*/
+function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_controller = true){
+    $arr = get_path_info(true);
+    $module = $arr[0];
+    $controller = $arr[1];
+    $action = $arr[2];
+    if($ucfirst_controller){
+        $controller = ucfirst($controller);
+    }
+    $class = "\\".$ns."\\".$module."\\".$add_controller."\\".$controller;
+    if(class_exists($class)){
+        $obj = new $class();
+        if(method_exists($obj,$action)){
+            return $obj->$action();
+        }
+    }
+} 
