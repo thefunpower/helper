@@ -404,3 +404,31 @@ function make_rand_code($node_id){
 function update_make_rand_code($node_id){
     db_update("rand_code",['status'=>1],['nid'=>$node_id]);
 }
+/**
+* 创建锁定操作
+* 默认锁定1分钟
+*/
+function set_lock($key,$exp_time = 60){
+    if(get_make_lock($key)){
+        return false;
+    }
+    cache("lock:".$key,1,$exp_time);
+}
+/**
+* 获取是否锁定
+*/
+function get_lock($key){
+    $res = cache("lock:".$key);
+    if($res){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+* 释放锁定
+*/
+function del_lock($key){
+    cache("lock:".$key,null);
+}
