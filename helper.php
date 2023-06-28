@@ -379,3 +379,28 @@ function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_con
         pathinfo_not_find();
     }
 }
+/**
+* 生成数字随机数
+* 一般用于核销
+* 需要表名 rand_code 字段  nid code status默认0
+*/
+function make_rand_code($node_id){
+    $code = mt_rand(1000000,9999999);
+    $res =  db_get_one('rand_code',['code'=>$code,'status'=>0]);    
+    if($res){
+        make_rand_code($node_id);
+    }else{
+        db_insert('rand_code',[
+            'nid'=>$node_id,
+            'code'=>$code,
+            'status'=>0,
+        ]);
+        return $code;
+    }
+}
+/**
+* 核销后需要释放核销码
+*/
+function update_make_rand_code($node_id){
+    db_update("rand_code",['status'=>1],['nid'=>$node_id]);
+}
