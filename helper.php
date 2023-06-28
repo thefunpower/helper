@@ -358,10 +358,22 @@ function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_con
         $controller = ucfirst($controller);
     }
     $class = "\\".$ns."\\".$module."\\".$add_controller."\\".$controller;
+    $finded = false;
     if(class_exists($class)){
         $obj = new $class();
         if(method_exists($obj,$action)){
+            $finded = true;
             return $obj->$action();
         }
+    }else{
+        $class = "\\".$ns."\controller\Index";
+        if(class_exists($class)){
+            $obj = new $class();
+            if(method_exists($obj,'index')){
+                $finded = true;
+                return $obj->$action();
+            }
+        }
     }
+    return $finded;
 } 
