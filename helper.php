@@ -348,6 +348,7 @@ function get_path_info($return_array = false){
 
 /**
 *  支持pathinfo路由
+*  未找到请用 pathinfo_not_find 函数
 */
 function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_controller = true){
     $arr = get_path_info(true);
@@ -356,24 +357,25 @@ function router_pathinfo($ns = 'app',$add_controller = 'controller',$ucfirst_con
     $action = $arr[2];
     if($ucfirst_controller){
         $controller = ucfirst($controller);
-    }
-    $class = "\\".$ns."\\".$module."\\".$add_controller."\\".$controller;
-    $finded = false;
-    if(class_exists($class)){
-        $obj = new $class();
-        if(method_exists($obj,$action)){
-            $finded = true;
-            return $obj->$action();
-        }
-    }else{
-        $class = "\\".$ns."\controller\Index";
+    } 
+    if($module){ 
+        $class = "\\".$ns."\\".$module."\\".$add_controller."\\".$controller; 
         if(class_exists($class)){
             $obj = new $class();
-            if(method_exists($obj,'index')){
-                $finded = true;
+            if(method_exists($obj,$action)){ 
                 return $obj->$action();
             }
         }
+    }else{
+       $class = "\\".$ns."\controller\Index";
+        if(class_exists($class)){
+            $obj = new $class();
+            if(method_exists($obj,'index')){ 
+                return $obj->$action();
+            }
+        } 
+    } 
+    if(function_exists("pathinfo_not_find")){
+        pathinfo_not_find();
     }
-    return $finded;
-} 
+}
