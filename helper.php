@@ -409,9 +409,6 @@ function update_make_rand_code($node_id){
 * 默认锁定1分钟
 */
 function set_lock($key,$exp_time = 60){
-    if(get_make_lock($key)){
-        return false;
-    }
     cache("lock:".$key,1,$exp_time);
 }
 /**
