@@ -204,6 +204,9 @@ function download_remote_file($url,$path='',$name = ''){
     $file = $path.$name;  
     if(!file_exists($file) || (file_exists($file) && filesize($file) < 10)){ 
         $context = get_remote_file($url);
+        $mime = get_mime($url);
+        $arr = ['mime'=>$mime,'url'=>$url];
+        do_action("download",$arr);
         $dir = get_dir($file); 
         if(!is_dir($dir)){
             mkdir($dir,0777,true);
