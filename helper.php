@@ -432,3 +432,21 @@ function get_lock($key){
 function del_lock($key){
     cache("lock:".$key,null);
 }
+/**
+* json数据替换
+* @param $json  json格式数组或数组
+* @param $replace  要替换的数组，如$replace = ['appid'=>'new appid'];
+* @param $return_json  默认返回JSON格式
+*/
+function json_replace($json,$replace = [],$return_json = true){
+    if(is_array($json)){
+        $base = $json;
+    }else{
+        $base = json_decode($json,true);    
+    }  
+    $new = array_replace_recursive($base,$replace);
+    if($return_json){
+        return json_encode($new,JSON_UNESCAPED_UNICODE);
+    }
+    return $new;
+}
