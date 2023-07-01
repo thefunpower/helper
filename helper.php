@@ -450,3 +450,11 @@ function json_replace($json,$replace = [],$return_json = true){
     }
     return $new;
 }
+
+/**
+* 去除PHP代码注释  
+*/
+function remove_php_notes($content){
+    return preg_replace("/(\/\*(\s|.)*?\*\/)|(\/\/.(\s|.*))|(#(\s*)?(.*))/", '', str_replace(array("\r\n", "\r"), "\n", $content)); 
+}
+ 
