@@ -304,16 +304,16 @@ function curl_aliyun($url,$bodys = '',$method='POST')
 * 返回成功的json信息
 */
 function success_data($data,$msg = ''){
-    return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg,'host'=>host()];
+    return ['data'=>$data,'code'=>0,'type'=>'success','msg'=>$msg,'host'=>host(),'time'=>now()];
 }
 /**
 * 返回失败的json信息
 */
 function error_data($msg){
     if(is_string($msg)){
-        return ['msg'=>$msg,'code'=>250,'type'=>'error'];    
+        return ['msg'=>$msg,'code'=>250,'type'=>'error','time'=>now()];    
     }else if(is_array($msg)){
-        return array_merge(['code'=>250,'type'=>'error'],$msg);
+        return array_merge(['code'=>250,'type'=>'error','time'=>now()],$msg);
     } 
 }
 
