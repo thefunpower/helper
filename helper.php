@@ -466,3 +466,11 @@ function online_view_office($url){
     $url = urlencode($url);
     return "https://view.officeapps.live.com/op/view.aspx?src=".$url;
 }
+/**
+ * 格式化输出金额
+ */
+function printfs(&$v,$keys = [],$dot = 2){ 
+    foreach($keys as $k){
+        $v[$k] = bcmul($v[$k],1,$dot);
+    } 
+}
