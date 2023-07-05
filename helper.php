@@ -457,4 +457,12 @@ function json_replace($json,$replace = [],$return_json = true){
 function remove_php_notes($content){
     return preg_replace("/(\/\*(\s|.)*?\*\/)|(\/\/.(\s|.*))|(#(\s*)?(.*))/", '', str_replace(array("\r\n", "\r"), "\n", $content)); 
 }
- 
+/**
+* 在线查看office文件
+*/
+function online_view_office($url){
+    $url = str_replace("https://","",$url);
+    $url = str_replace("http://","",$url);
+    $url = urlencode($url);
+    return "https://view.officeapps.live.com/op/view.aspx?src=".$url;
+}
