@@ -468,9 +468,13 @@ function online_view_office($url){
 }
 /**
  * 格式化输出金额
+ * 强制输出数字类型
  */
 function printfs(&$v,$keys = [],$dot = 2){ 
+    $p = pow(10,$dot);
     foreach($keys as $k){
-        $v[$k] = bcmul($v[$k],1,$dot);
+        $val   = $v[$k];
+        $val   = (int)bcmul($val,$p);
+        $v[$k] = bcdiv($val,$p,$dot); 
     } 
 }
