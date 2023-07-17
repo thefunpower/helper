@@ -478,3 +478,75 @@ function printfs(&$v,$keys = [],$dot = 2){
         $v[$k] = bcdiv($val,$p,$dot); 
     } 
 }
+
+/**
+* 加载xlsx 
+load_xls([
+    'file'  => $xls,
+    'config'=>[
+        '序号'  =>'index', 
+    ],
+    'title_line'=>1,
+    'call'=>function($i,$row,&$d){}
+]);
+*/
+function load_xls($new_arr = []){
+    $xls_file   = $new_arr['file'];
+    $config     = $new_arr['config'];
+    $title_line = $new_arr['title_line']?:1;
+    $call       = $new_arr['call'];
+    $is_full    = $new_arr['is_full']?:false; 
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($xls_file);
+    $worksheet = $spreadsheet->getActiveSheet();
+    //总行数
+    $rows      = $worksheet->getHighestRow();
+    //总列数 A-F
+    $columns   = $worksheet->getHighestColumn();
+    $index     = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::columnIndexFromString($columns);
+    $lists = []; 
+    for ($row = 1; $row <= $rows; $row++) {
+        $list = []; 
+        for ($i = 1; $i <= $index; $i++) {  
+            $d = $worksheet->getCellByColumnAndRow($i,$row)->getValue(); 
+            if (is_object($d)) {
+                $d = $d->__toString();
+            }   
+            if($call){
+                $call($i,$row,$d);
+            } 
+            $list[] = $d;  
+        }
+        $lists[] = $list;
+    }
+    $top    = $title_line-1;
+    $titles = $lists[$top];
+    $titles = array_flip($titles); 
+    $new_lists = [];
+    foreach($lists as $i=>$v){
+        if($i > $top){
+            if($config){
+                $new_list = [];
+                foreach($config as $kk=>$vv){
+                    $j = $titles[$kk];
+                    $new_list[$vv] = $v[$j];
+                }
+                $new_lists[] = $new_list;
+            }
+        }
+    }
+    if($new_lists){
+        $lists = $new_lists;
+    } 
+    $ret =  [
+        'data'    => $lists,
+        //总行数
+        'total_r' => $rows,
+        //总列数
+        'total_c' => $index, 
+    ];
+    if($is_full){
+        return $ret;
+    }else{
+        return $ret['data'];
+    } 
+}
