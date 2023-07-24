@@ -1,6 +1,9 @@
 <?php  
 //定义HELPER目录
 define("HELPER_DIR",__DIR__);   
+if(!defined('DS')){
+    define('DS',DIRECTORY_SEPARATOR);    
+}
 /**
  * redis
  */
