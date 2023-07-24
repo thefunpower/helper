@@ -483,7 +483,25 @@ function printfs(&$v,$keys = [],$dot = 2){
 * float不进位，如3.145 返回3.14
 * 进位的有默认round(3.145) 或sprintf("%.2f",3.145);
 */
-function float_noup($float_number,$dot = 2){ 
+function float_noup($float_number,$dot = 2){  
+   $p = pow(10,$dot);
+   return floor($float_number*$p)/$p;  
+}
+/**
+* 四舍五入
+* @param $mid_val 逢几进位
+*/
+function float_up($float_number,$dot = 2,$mid_val = 5){ 
+   $p = pow(10,$dot);
+   if(strpos($float_number,'.')!==false){
+     $a = substr($float_number,strpos($float_number,'.')+1); 
+     $a = substr($a,$dot,1)?:0; 
+     if($a >= $mid_val){ 
+         return bcdiv(bcmul($float_number,$p)+1,$p,$dot);
+     }else{
+         return bcdiv(bcmul($float_number,$p),$p,$dot);
+     }
+   }
    $p = pow(10,$dot);
    return floor($float_number*$p)/$p;  
 }
