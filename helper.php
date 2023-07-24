@@ -480,6 +480,15 @@ function printfs(&$v,$keys = [],$dot = 2){
 }
 
 /**
+* float不进位，如3.145 返回3.14
+* 进位的有默认round(3.145) 或sprintf("%.2f",3.145);
+*/
+function float_noup($float_number,$dot = 2){ 
+   $p = pow(10,$dot);
+   return floor($float_number*$p)/$p;  
+}
+
+/**
 * 加载xlsx 
 load_xls([
     'file'  => $xls,
