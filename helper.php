@@ -577,3 +577,20 @@ function load_xls($new_arr = []){
         return $ret['data'];
     } 
 }
+
+/**
+* 获取文件行数，不包空行
+*/
+function get_lines($file,$length = 40960){ 
+    $i = 1; 
+    $handle = @fopen($file, "r");
+    if ($handle) {
+        while (!feof($handle)) {
+            $body = fgets($handle, $length); 
+            if($body && trim($body))
+                $i++;
+        }
+        fclose($handle);
+    }
+    return $i;
+}
