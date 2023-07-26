@@ -597,3 +597,41 @@ function get_lines($file,$length = 40960){
     }
     return $i;
 }
+
+/**
+* 返回请求中是http还是https
+*/
+function get_request_top() {
+    if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+        return 'https';
+    } elseif ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https' ) {
+        return 'https';
+    } elseif ( !empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off') {
+        return 'https';
+    }
+    return 'http';
+}
+/**
+* 返回请求域名及URL部分，不包含http://
+*/
+function get_request_host(){ 
+    $port = $_SERVER['SERVER_PORT'];
+    if(in_array($port,[80,443])){
+        $port = '';
+    }else{
+        $port = ':'.$port;
+    }
+    return $_SERVER['SERVER_NAME'].$port.$_SERVER['REQUEST_URI'];
+}
+/**
+* 自动跳转到https网站
+*/
+function auto_jump(){
+    $url = get_request_host();
+    $top = get_request_top(); 
+    if($top != 'https' && strtolower($_SERVER['REQUEST_METHOD']) == 'get'){ 
+        $new_url = "https://".$url;
+        header("Location: " . $new_url);
+        exit;
+    }    
+}
