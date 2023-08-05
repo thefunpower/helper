@@ -635,3 +635,27 @@ function auto_jump(){
         exit;
     }    
 }
+
+//取http的url
+function get_http_full_url($url,$fun = 'cdn_url')
+{
+    if(strpos($url,'://') === false){
+        return $fun().$url;
+    }else{
+        return $url;
+    }
+}
+/**
+* 从数组中搜索
+*/
+function get_index_array_valule($array,$key,$val){
+   $i = 0;
+   foreach($array as $v){ 
+        if($v[$key] == $val){ 
+            break;
+        }
+        $i++;
+   }  
+   return $i;
+}
+
