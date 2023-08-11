@@ -659,3 +659,14 @@ function get_index_array_valule($array,$key,$val){
    return $i;
 }
 
+/**
+* GBK字符截取
+* 一个中文算2个字符
+*/
+if(!function_exists("gbk_substr")){
+    function gbk_substr($text, $start, $len,$gbk = 'GBK'){
+        $str = mb_strcut(mb_convert_encoding($text, $gbk,"UTF-8"), $start,$len,$gbk); 
+        $str = mb_convert_encoding($str, "UTF-8", $gbk);
+        return $str;
+    }
+}
