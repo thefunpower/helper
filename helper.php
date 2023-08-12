@@ -670,3 +670,62 @@ if(!function_exists("gbk_substr")){
         return $str;
     }
 }
+/**
+* GBK长宽 
+* 2个字符
+*/
+function get_gbk_len($value,$gbk = 'GBK')
+{
+   return strlen(iconv("UTF-8", $gbk."//IGNORE", $value));
+}
+/**
+* 文字居中
+*/
+function get_text_c($str,$len){ 
+    $cur_len = get_gbk_len($str);
+    $less    = $len - $cur_len;
+    $s = (int)($less/2);
+    $e = $less - $s;
+    $append = '';
+    $end    = '';
+    for($i = 0;$i < $s;$i++){
+        $append.=" ";
+    }
+    for($i = 0;$i < $e;$i++){
+        $end.=" ";
+    } 
+    return $append.$str.$end;
+}
+/**
+* 文字排版 
+* 左 中 右
+* 左    右  
+*/
+function get_text_lr($arr = [],$length,$return_arr = false){ 
+    $count  = count($arr);
+    $middle = (int)(bcdiv($length,$count));
+    $j = 1; 
+    foreach($arr as &$v){ 
+        $cur_len = get_gbk_len($v);
+        $less    = $middle - $cur_len;
+        $append  = "";
+        if($less > 0){
+            for($i = 0;$i < $less;$i++){
+                $append.=" ";
+            }
+            if($j == $count){ 
+                $v = $append.$v;
+            }else{
+                $v = $v.$append;
+            } 
+        }else{
+            $v = gbk_substr($v,0,$middle);
+        } 
+        $j++;
+    }
+    if($return_arr){
+        return $return_arr;
+    }else{
+        return implode("",$arr);
+    }
+}
