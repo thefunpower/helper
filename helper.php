@@ -681,7 +681,7 @@ function get_gbk_len($value,$gbk = 'GBK')
 /**
 * 文字居中
 */
-function get_text_c($str,$len){ 
+function get_text_c(string $str,int $len){ 
     $cur_len = get_gbk_len($str);
     $less    = $len - $cur_len;
     $s = (int)($less/2);
@@ -701,7 +701,7 @@ function get_text_c($str,$len){
 * 左 中 右
 * 左    右  
 */
-function get_text_lr($arr = [],$length,$return_arr = false){ 
+function get_text_lr(array $arr,int $length,$return_arr = false){ 
     $count  = count($arr);
     $middle = (int)(bcdiv($length,$count));
     $j = 1; 
