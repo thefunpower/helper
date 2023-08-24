@@ -125,7 +125,7 @@ function get_url_remove_http($url){
     }
     $url = substr($url,strpos($url,'://')+3);
     $url = substr($url,strpos($url,'/'));
-    return $url;
+    return trim($url);
 }
 /**
 * 取后缀
