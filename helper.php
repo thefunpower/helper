@@ -746,3 +746,14 @@ function allow_cross_origin(){
         exit;
     }
 }
+if(class_exists('di')){
+    class di
+    {
+        public $instance = [];
+     
+        public function __set($name, $value)
+        {
+            $this->instance[$name] = $value;
+        }
+    }
+}
