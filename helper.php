@@ -746,7 +746,7 @@ function allow_cross_origin(){
         exit;
     }
 }
-if(class_exists('di')){
+if(!class_exists('di')){
     /**
     * global $di;
     * $di = new di();
