@@ -747,6 +747,11 @@ function allow_cross_origin(){
     }
 }
 if(class_exists('di')){
+    /**
+    * global $di;
+    * $di = new di();
+    * $di->adapter = new adapter(); 
+    */
     class di
     {
         public $instance = [];
