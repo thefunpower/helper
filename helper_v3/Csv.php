@@ -35,7 +35,7 @@ class Csv{
 		   if(is_array($v)){
 		   	foreach($v as $vv){
 		   		if($vv){
-		   			$vv = string_to_utf8($vv);
+		   			$vv = to_utf8($vv);
 		   		}
 		   		$list[] = $vv;
 		   	}

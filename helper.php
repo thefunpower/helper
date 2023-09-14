@@ -764,17 +764,29 @@ if(!class_exists('di')){
 }
 /**
 * 字符转UTF-8
+* str支持数组
 */
-function string_to_utf8($str){
-    if(!$str){
-        return $str;
+if(!function_exists("to_utf8")){
+    function to_utf8($str){
+        if(!$str){
+            return $str;
+        }
+        if(is_array($str)){
+            $list = [];
+            foreach($str as $k=>$v){
+                $list[$k] = to_utf8($v);
+            }
+            return $list;
+        }else { 
+            $encoding = mb_detect_encoding($str, "UTF-8, GBK, ISO-8859-1");
+            if($encoding && $encoding != 'UTF-8'){
+                $str = iconv($encoding, "UTF-8//IGNORE", $str);
+                $str = trim($str);
+            }   
+            return $str;
+        } 
     }
-    $encoding = mb_detect_encoding($str, "UTF-8, GBK, ISO-8859-1");
-    if($encoding && $encoding != 'UTF-8'){
-        $str = iconv($encoding, "UTF-8//IGNORE", $str);
-    }  
-    return $str;
-}
+} 
 /**
 * 读取CSV
 */
