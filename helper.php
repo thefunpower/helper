@@ -763,12 +763,11 @@ if(!class_exists('di')){
     }
 }
 /**
-* 字符转UTF-8
-* str支持数组
+* 字符或数组 转UTF-8 
 */
 if(!function_exists("to_utf8")){
     function to_utf8($str){
-        if(!$str){
+        if(!$str || (!is_array($str) && !is_string($str))){
             return $str;
         }
         if(is_array($str)){
