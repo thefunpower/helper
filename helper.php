@@ -762,3 +762,33 @@ if(!class_exists('di')){
         }
     }
 }
+/**
+* 字符转UTF-8
+*/
+function string_to_utf8($str){
+    if(!$str){
+        return $str;
+    }
+    $encoding = mb_detect_encoding($str, "UTF-8, GBK, ISO-8859-1");
+    if($encoding && $encoding != 'UTF-8'){
+        $str = iconv($encoding, "UTF-8//IGNORE", $str);
+    }  
+    return $str;
+}
+/**
+* 读取CSV
+*/
+if(!function_exists('csv_reader')){
+    function csv_reader($file){
+        return helper_v3\Csv::reader($file);
+    }
+}
+/**
+* 写入CSV
+*/
+if(!function_exists('csv_writer')){
+    function csv_writer($file,$header = [],$content = []){
+        return helper_v3\Csv::writer($file,$header,$content);
+    }
+}
+
