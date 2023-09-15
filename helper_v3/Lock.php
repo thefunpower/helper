@@ -6,9 +6,12 @@
 namespace helper_v3;  
 use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Store\SemaphoreStore;
+/**
+https://symfony.com/doc/current/components/lock.html
+*/
 
 class Lock{
-	
+
 	public static $lock;
 	public static function init(){
 		if(self::$lock){
@@ -19,9 +22,8 @@ class Lock{
 	} 
 
 	public static function do($key,$call,$time = 10){
-		$factory = self::init();
-		$lock = $factory->createLock($key);  
-		$lock = $factory->createLock($key,$time,false); 
+		$factory = self::init(); 
+		$lock = $factory->createLock($key,$time,false);  
 		if (!$lock->acquire()) {
 		    return;
 		}
