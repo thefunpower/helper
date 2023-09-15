@@ -17,7 +17,8 @@
         "iio/libmergepdf": "^3.1",
         "predis/predis": "^2.1",
         "league/csv": "^9.0",
-        "overtrue/socialite": "^4.9"
+        "overtrue/socialite": "^4.9",
+        "symfony/lock": "^6.3"
     },
     "autoload": { 
         "files": [ 

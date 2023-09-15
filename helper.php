@@ -802,4 +802,9 @@ if(!function_exists('csv_writer')){
         return helper_v3\Csv::writer($file,$header,$content);
     }
 }
-
+/**
+* 锁
+*/
+function lock_call($key,$call,$time = 10){
+    return helper_v3\Lock::do($key,$call,$time);
+}
