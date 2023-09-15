@@ -36,6 +36,7 @@ class Lock{
 	} 
 
 	public static function start($key,$time = 10){
+		$factory   = self::init(); 
 		self::$key = $key;
 		$lock = $factory->createLock($key,$time,false);  
 		self::$lock = $lock;
