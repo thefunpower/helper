@@ -806,6 +806,9 @@ if(!function_exists('csv_writer')){
 * 基于redis锁
 * 
 global $redis_lock; 
+//锁前缀
+global $lock_key;
+
 $redis_lock = [
     'host'=>'',
     'port'=>'',
@@ -820,10 +823,14 @@ if(lock_start('k')){
 }
 */
 function lock_call($key,$call,$time = 10){
+    global $lock_key;
+    $key = $lock_key.$key;
     return helper_v3\Lock::do($key,$call,$time);
 }
 
 function lock_start($key,$time=1){ 
+    global $lock_key;
+    $key = $lock_key.$key;
     return helper_v3\Lock::start($key,$time);  
 }
 
