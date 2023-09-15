@@ -803,8 +803,31 @@ if(!function_exists('csv_writer')){
     }
 }
 /**
-* 锁
+* 基于redis锁
+* 
+global $redis_lock; 
+$redis_lock = [
+    'host'=>'',
+    'port'=>'',
+    'auth'=>'',
+];
+
+lock_call('k',functon(){},1);
+或
+if(lock_start('k')){
+    ..
+    lock_end();
+}
 */
 function lock_call($key,$call,$time = 10){
     return helper_v3\Lock::do($key,$call,$time);
 }
+
+function lock_start($key,$time=1){ 
+    return helper_v3\Lock::start($key,$time);  
+}
+
+function lock_end(){  
+    return helper_v3\Lock::end();
+}
+
