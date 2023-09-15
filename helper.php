@@ -827,13 +827,17 @@ function lock_call($key,$call,$time = 10){
     $key = $lock_key.$key;
     return helper_v3\Lock::do($key,$call,$time);
 }
-
+/**
+* 开始锁
+*/
 function lock_start($key,$time=1){ 
     global $lock_key;
     $key = $lock_key.$key;
     return helper_v3\Lock::start($key,$time);  
 }
-
+/**
+* 释放锁
+*/
 function lock_end(){  
     return helper_v3\Lock::end();
 }
