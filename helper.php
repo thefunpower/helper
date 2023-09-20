@@ -842,3 +842,19 @@ function lock_end(){
     return helper_v3\Lock::end();
 }
 
+/**
+* 比较日期 
+* Y-m-d
+* $a>$b?true:false
+*/
+if(!function_exists('compare_date')){
+    function compare_date($a,$b){
+        $a = str_replace("-","",$a);
+        $b = str_replace("-","",$b);
+        if(bcsub($a,$b) > 0){
+            return true;
+        }else {
+            return false;
+        }
+    }
+}
