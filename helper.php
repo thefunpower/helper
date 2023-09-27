@@ -858,3 +858,46 @@ if(!function_exists('compare_date')){
         }
     }
 }
+
+/**
+* 发布消息
+redis_pub("demo","welcome man");
+redis_pub("demo",['title'=>'yourname']);
+*/
+function redis_pub($channel,$message){
+    $redis = predis();
+    if(is_array($message)){
+        $message = json_encode($message,JSON_UNESCAPED_UNICODE); 
+    }
+    $res = $redis->publish($channel,$message); 
+    if(function_exists('is_cli') && is_cli()){
+        echo "消息已发布给 {$res} 个订阅者。"; 
+    }   
+}
+
+/**
+* 取订阅消息
+redis_sub("demo",function($channel,$message){
+  echo "channel ".$channel."\n";
+  print_r($message);
+});
+*/
+function redis_sub($channel,$call){
+  $redis = predis();
+  // 创建订阅者对象
+  $sub = $redis->pubSubLoop(); 
+  // 订阅指定频道 
+  $sub->subscribe($channel); 
+  foreach ($sub as $message) {
+      // 当接收到消息时，处理消息内容
+      if ($message->kind === 'message') {
+          $channel = $message->channel;
+          $payload = $message->payload; 
+          if(function_exists("is_json") && is_json($payload)){
+            $payload = json_decode($payload,true);
+          }
+          $call($channel,$payload); 
+      }
+  } 
+}
+

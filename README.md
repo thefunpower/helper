@@ -21,6 +21,28 @@ define("WWW_PATH",__DIR__.'/');
 
 data在根目录 uploads在网站访问的目录
 
+## Predis Publish Subscribe 
+连接 
+~~~
+predis($host,$port,$auth);
+~~~
+
+发布消息
+
+~~~
+redis_pub("demo","welcome man");
+redis_pub("demo",['title'=>'yourname']);
+~~~
+
+取订阅消息
+
+~~~ 
+redis_sub("demo",function($channel,$message){
+  echo "channel ".$channel."\n";
+  print_r($message);
+}); 
+~~~
+
 
 ## Predis GEO
 连接 
