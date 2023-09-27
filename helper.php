@@ -882,7 +882,7 @@ redis_sub("demo",function($channel,$message){
   print_r($message);
 });
 */
-function redis_sub($channel,$call){
+function redis_sub($channel,$call,$unsubscribe = false){
   $redis = predis();
   // 创建订阅者对象
   $sub = $redis->pubSubLoop(); 
@@ -897,6 +897,9 @@ function redis_sub($channel,$call){
             $payload = json_decode($payload,true);
           }
           $call($channel,$payload); 
+          if($unsubscribe){
+            $sub->unsubscribe($channel);  
+          }          
       }
   } 
 }
