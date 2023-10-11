@@ -139,7 +139,7 @@ https://mpdf.github.io/installation-setup/installation-v7-x.html
 ~~~
 use helper_v3\Pdf;
 
-$mpdf = Pdf::mpdfInit();
+$mpdf = Pdf::init();
 $mpdf->WriteHTML('<h1>Hello world!</h1>');
 $mpdf->Output();
 ~~~
@@ -200,7 +200,7 @@ th,td {
     </tr>
   </tbody>
 </table>';
-    $mpdf = Pdf::mpdfInit();
+    $mpdf = Pdf::init();
     $mpdf->shrink_tables_to_fit = 1;
     $mpdf->WriteHTML($html);
     $mpdf->Output();
