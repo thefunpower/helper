@@ -290,7 +290,14 @@ node server.js
 2.HTML添加监听
 
 ~~~ 
-get_ws_js($func,$port = 3006) 
+<script>
+<?php 
+$func = "
+    console.log(data);
+";
+echo get_ws_js($func,$port = 3006);
+?>
+</script>
 ~~~
 
 3.php发送消息
