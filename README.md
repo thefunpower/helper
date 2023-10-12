@@ -296,7 +296,8 @@ https://github.com/joewalnes/reconnecting-websocket
 ~~~ 
 <script>
 <?php 
-$func = "
+$func = " 
+    data = JSON.parse(data);
     console.log(data);
 ";
 echo get_ws_js($func,$port = 3006);
