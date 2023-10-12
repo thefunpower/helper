@@ -903,4 +903,5 @@ function redis_sub($channel,$call,$unsubscribe = false){
       }
   } 
 }
+include __DIR__.'/inc/sub_pub_js.php';
 

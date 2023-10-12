@@ -268,6 +268,44 @@ Xls::create($title, $values, $name, FALSE);
 ~~~
 
 
+## 消息订阅
+
+依赖 
+~~~
+yarn add ioredis 
+~~~
+
+
+1.生成server.js 
+~~~
+echo create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.0.1',$port='6379',$auth='');
+~~~
+复制代码至`server.js`中
+
+启动server
+~~~
+node server.js
+~~~
+
+2.HTML添加监听
+
+~~~ 
+get_ws_js($func,$port = 3006) 
+~~~
+
+3.php发送消息
+~~~
+redis_pub("demo",['title'=>'yourname']);
+~~~
+
+测试
+~~~
+redis_sub("demo",function($channel,$message){
+  echo "channel ".$channel."\n";
+  print_r($message);
+});
+~~~
+
 
 ### 开源协议 
 
