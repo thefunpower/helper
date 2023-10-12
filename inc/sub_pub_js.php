@@ -4,7 +4,7 @@
 */
 function get_ws_js($func,$port = 3006){
 	return "
-	const socket = new WebSocket('ws://127.0.0.1:".$port."'); 
+	const socket = new ReconnectingWebSocket('ws://127.0.0.1:".$port."'); 
 	socket.onopen = function() {
 	  console.log('WebSocket connection is open');
 	}; 

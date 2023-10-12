@@ -289,6 +289,10 @@ node server.js
 
 2.HTML添加监听
 
+依赖 `reconnecting-websocket.js`
+
+https://github.com/joewalnes/reconnecting-websocket
+
 ~~~ 
 <script>
 <?php 
