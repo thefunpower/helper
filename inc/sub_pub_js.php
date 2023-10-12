@@ -24,9 +24,11 @@ function get_ws_js($func,$port = 3006){
 * 依赖 ioredis 
 */
 function create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.0.1',$port='6379',$auth=''){
-	$str = '';
+	$str1 = '';
+	$str2 = '';
 	foreach($topic as $v){
-		$str = "redisClient.subscribe('".$v."');";
+		$str1 .= "redisClient.subscribe('".$v."');";
+		$str2 .= "redisClient.publish('".$v."', message);"; 
 	}
 	return "
 	const WebSocket = require('ws');
@@ -47,7 +49,7 @@ function create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.
 	    console.log('Received message:', message);
 	    // 在这里处理接收到的WebSocket消息
 	    // 将接收到的WebSocket消息发布到Redis频道
-	    redisClient.publish('demo', message);
+	    ".$str2."
 	  });
 	  ws.on('close', function() {
 	    console.log('A client disconnected');
@@ -57,7 +59,7 @@ function create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.
 	});
 
 	// 监听Redis频道消息
-	".$str."
+	".$str1."
 	redisClient.on('message', function(channel, message) {
 	  console.log('Redis message:', message);
 	  // 将Redis频道消息广播给所有WebSocket连接的客户端
