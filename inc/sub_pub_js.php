@@ -1,10 +1,12 @@
 <?php 
 /**
 * HTML端收消息
+* wss://yourdomain/wss
+* ws://ip:port
 */
-function get_ws_js($func,$port = 3006){
+function get_ws_js($func,$ws='ws://127.0.0.1:3006'){
 	return "
-	const socket = new ReconnectingWebSocket('ws://127.0.0.1:".$port."'); 
+	const socket = new ReconnectingWebSocket('".$ws."'); 
 	socket.onopen = function() {
 	  console.log('WebSocket connection is open');
 	}; 

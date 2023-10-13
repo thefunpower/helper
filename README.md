@@ -273,6 +273,7 @@ Xls::create($title, $values, $name, FALSE);
 依赖 
 ~~~
 yarn add ioredis 
+yarn add ws 
 ~~~
 
 
@@ -300,14 +301,30 @@ $func = "
     data = JSON.parse(data);
     console.log(data);
 ";
-echo get_ws_js($func,$port = 3006);
+echo get_ws_js($func,'ws://127.0.0.1:3006');
 ?>
 </script>
 ~~~
+其中`ws://127.0.0.1:3006` 如果是 wss 则`wss://yourdomain/wss`
 
 3.php发送消息
 ~~~
 redis_pub("demo",['title'=>'yourname']);
+~~~
+
+如使用wss则需配置Nginx转发
+~~~
+location /wss {
+    proxy_pass http://127.0.0.1:3006;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    rewrite /wss/(.*) /$1 break;
+    proxy_redirect off;
+}
 ~~~
 
 测试
@@ -317,6 +334,8 @@ redis_sub("demo",function($channel,$message){
   print_r($message);
 });
 ~~~
+
+
 
 
 ### 开源协议 
