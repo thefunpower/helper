@@ -12,10 +12,13 @@ function get_ws_js($func,$ws='ws://127.0.0.1:3006'){
 	}; 
 	socket.onmessage = function(event) { 
 	  let data = event.data;
+	  try {
+         data = JSON.parse(data); 
+      } catch (e) { 
+      }  
 	  // 处理接收到的消息
 	  ".$func."
-	};
-
+	}; 
 	socket.onclose = function(event) {
 	  console.log('WebSocket connection is closed');
 	};";
