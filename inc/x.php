@@ -4,6 +4,9 @@
 */
 if(!function_exists("xis_ssl")){
     function xis_ssl(){
+        if(function_exists("is_ssl")){
+            return is_ssl();
+        }
         global $config;
         return  strpos($config['host'],'https://') !== false ?true:false;
     }
