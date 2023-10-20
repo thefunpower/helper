@@ -335,7 +335,16 @@ redis_sub("demo",function($channel,$message){
 });
 ~~~
 
-
+### xcookie 加密
+~~~
+//设置
+xcookie("ss",1);
+xcookie("ss",['title'=>'tt']);
+//读取
+pr(xcookie("ss"));
+//删除
+xcookie_delete("ss"); 
+~~~
 
 
 ### 开源协议 
