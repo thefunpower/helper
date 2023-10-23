@@ -333,8 +333,7 @@ redis_sub("demo",function($channel,$message){
   echo "channel ".$channel."\n";
   print_r($message);
 });
-~~~
-
+~~~ 
 
 ###  pusher
 
@@ -356,6 +355,18 @@ PUSHER_APP_CLUSTER =
 发送消息
 ~~~
 helper_v3\Pusher::sender($channel,$event,$data = []);
+=======
+
+### xcookie 加密
+
+~~~
+//设置
+xcookie("ss",1);
+xcookie("ss",['title'=>'tt']);
+//读取
+pr(xcookie("ss"));
+//删除
+xcookie_delete("ss");  
 ~~~
 
 
