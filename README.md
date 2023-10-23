@@ -355,7 +355,7 @@ PUSHER_APP_CLUSTER =
 发送消息
 ~~~
 helper_v3\Pusher::sender($channel,$event,$data = []);
-=======
+~~~
 
 ### xcookie 加密
 
