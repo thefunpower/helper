@@ -350,6 +350,15 @@ PUSHER_APP_CLUSTER =
 
 ~~~
 <script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+<script type="text/javascript">
+var pusher = new Pusher("<?=get_config("PUSHER_APP_KEY")?>", {
+  cluster: "<?=get_config("PUSHER_APP_CLUSTER")?>",
+});
+var channel = pusher.subscribe("netteadmin");
+channel.bind("notice", (data) => {
+   console.log(data);
+});
+</script>
 ~~~
 
 发送消息
