@@ -336,6 +336,27 @@ redis_sub("demo",function($channel,$message){
 ~~~
 
 
+###  pusher
+
+https://pusher.com/
+
+~~~
+PUSHER_APP_KEY = 
+PUSHER_APP_SECRET = 
+PUSHER_APP_ID = 
+PUSHER_APP_CLUSTER =  
+~~~
+ 
+前端需要加载JS
+
+~~~
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+~~~
+
+发送消息
+~~~
+helper_v3\Pusher::sender($channel,$event,$data = []);
+~~~
 
 
 ### 开源协议 
