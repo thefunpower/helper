@@ -903,6 +903,13 @@ function redis_sub($channel,$call,$unsubscribe = false){
       }
   } 
 }
+if(!function_exists("send_pusher")){
+    function send_pusher($data = [],$channel='netteadmin',$event='notice'){
+        return helper_v3\Pusher::send($channel,$event,$data);
+    }
+}
+
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 

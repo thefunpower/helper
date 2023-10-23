@@ -355,6 +355,8 @@ PUSHER_APP_CLUSTER =
 发送消息
 ~~~
 helper_v3\Pusher::sender($channel,$event,$data = []);
+或使用
+send_pusher($data = [],$channel='netteadmin',$event='notice');
 ~~~
 
 ### xcookie 加密
