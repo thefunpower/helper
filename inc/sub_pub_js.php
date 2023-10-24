@@ -50,6 +50,27 @@ function create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.
 	  console.log('A client connected');	  
 	  // 添加新的WebSocket连接到集合中
 	  clients.add(ws);
+	  // 检查离线消息队列
+	  redisClient.lrange('offline_messages', 0, -1, function (err, messages) {
+	    if (err) {
+	      console.error('Error getting offline messages:', err);
+	      return;
+	    } 
+	    if (messages && messages.length > 0) {
+	      // 发送离线消息给客户端
+	      messages.forEach(function (message) {
+	        ws.send(message);
+	      }); 
+	      // 从离线消息队列中移除已发送的消息
+	      redisClient.ltrim('offline_messages', messages.length, -1, function (err) {
+	        if (err) {
+	          console.error('Error trimming offline messages:', err);
+	        }
+	      });
+	    }
+	  });
+
+
 	  ws.on('message', function incoming(message) {
 	    console.log('Received message:', message);
 	    // 在这里处理接收到的WebSocket消息
@@ -71,6 +92,9 @@ function create_node_ws_server($ws_port=3006,$topic=['demo'],$redis_host='127.0.
 	  clients.forEach(function(client) {
 	    if (client.readyState === WebSocket.OPEN) {
 	      client.send(message);
+	    }else {
+	      // 将离线消息存储到离线消息队列
+	      redisClient.rpush('offline_messages', message);
 	    }
 	  });
 	});
