@@ -10,17 +10,7 @@ if(!function_exists("xis_ssl")){
         global $config;
         return  strpos($config['host'],'https://') !== false ?true:false;
     }
-}
-
-/**
- * 设置、获取cookie 
- */
-if(!function_exists('cookie')){
-    function cookie($name, $value = NULL, $expire = 0)
-    {
-        return xcookie($name, $value, $expire);
-    }
-}
+} 
 if(!function_exists('xcookie')){
     function xcookie($name, $value = NULL, $expire = 0)
     {
@@ -52,16 +42,7 @@ if(!function_exists('xcookie')){
         setcookie($name, $value, $opt);  
         $_COOKIE[$name] = $value;
     }
-}
-/**
- * 删除COOKIE 
- */ 
-if(!function_exists('cookie_delete')){
-    function cookie_delete($name)
-    {
-        return xcookie_delete($name);
-    }
-}
+} 
 if(!function_exists('xcookie_delete')){
     function xcookie_delete($name)
     {
