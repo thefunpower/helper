@@ -912,4 +912,5 @@ if(!function_exists("send_pusher")){
 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
+include __DIR__.'/inc/array.php';
 

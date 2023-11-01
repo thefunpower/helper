@@ -21,6 +21,7 @@
         "symfony/lock": "^6",
         "pusher/pusher-php-server": "^7.2",
         "phpoffice/phpspreadsheet": "*",
+        "spatie/array-to-xml": "*", 
         "imangazaliev/didom": "^2.0"
     },
     "autoload": { 
