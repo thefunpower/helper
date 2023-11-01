@@ -7,13 +7,8 @@ if(!function_exists("xml2array")){
 }
 
 if(!function_exists("array2xml")){
-	function array2xml($arr){
-		 return Spatie\ArrayToXml\ArrayToXml::convert($arr);
+	function array2xml($arr,$root = ''){
+		 return Spatie\ArrayToXml\ArrayToXml::convert($arr,$root);
 	}
 }
-
-
-
-
-
-
+ 
