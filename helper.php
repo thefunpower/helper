@@ -910,7 +910,7 @@ if(!function_exists("send_pusher")){
 } 
 if(!function_exists("think_check_sign")){
     function think_check_sign($json_string,$key='',$sign_key = 'sign'){
-        $key1 = get_config("sign_key")?:md5('abcnetteadmin123456');
+        $key1 = get_config("sign_secret")?:md5('abcnetteadmin123456');
         $key  = $key?:$key1;
         $arr  = json_decode($json_string,true); 
         $ori_sign = $arr[$sign_key];
@@ -921,7 +921,7 @@ if(!function_exists("think_check_sign")){
 }
 if(!function_exists("think_create_sign")){
     function think_create_sign($arr = [],$key=''){
-        $key1 = get_config("sign_key")?:md5('abcnetteadmin123456');
+        $key1 = get_config("sign_secret")?:md5('abcnetteadmin123456');
         $key  = $key?:$key1;
         return sign_by_secret($arr,$key,true);
     }
