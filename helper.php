@@ -907,6 +907,24 @@ if(!function_exists("send_pusher")){
     function send_pusher($data = [],$channel='netteadmin',$event='notice'){
         return helper_v3\Pusher::send($channel,$event,$data);
     }
+} 
+if(!function_exists("think_check_sign")){
+    function think_check_sign($json_string,$key='',$sign_key = 'sign'){
+        $key1 = get_config("sign_key")?:md5('abcnetteadmin123456');
+        $key  = $key?:$key1;
+        $arr  = json_decode($json_string,true); 
+        $ori_sign = $arr[$sign_key];
+        unset($arr[$sign_key]);
+        $sign = sign_by_secret($arr,$key,true);
+        return $ori_sign == $sign;
+    }
+}
+if(!function_exists("think_create_sign")){
+    function think_create_sign($arr = [],$key=''){
+        $key1 = get_config("sign_key")?:md5('abcnetteadmin123456');
+        $key  = $key?:$key1;
+        return sign_by_secret($arr,$key,true);
+    }
 }
 
 
