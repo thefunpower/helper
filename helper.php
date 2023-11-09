@@ -925,8 +925,38 @@ if(!function_exists("think_create_sign")){
         $key  = $key?:$key1;
         return sign_by_secret($arr,$key,true);
     }
-}
+} 
 
+/**
+* 取字符ascii
+* 
+* @params $is_join. add false
+*/
+if(!function_exists("get_str_ord")){
+    function get_str_ord($str,$is_join = false)
+    { 
+        $chars = str_split($str);
+        $arr   = []; 
+        $join  = '';
+        $join_sum  = 0;
+        foreach ($chars as $char) {
+            $ascii    = ord($char);
+            if($is_join){
+                if($is_join == 'add'){
+                    $join_sum = bcadd($ascii,$join_sum);    
+                }elseif($is_join == '.'){
+                    $join .= $ascii;    
+                } 
+            } else{
+                $arr[$char]    = $ascii;    
+            }       
+        }  
+        if($is_join){
+            return $join?:$join_sum;
+        }
+        return $arr; 
+    }
+}
 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
