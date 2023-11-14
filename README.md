@@ -398,6 +398,15 @@ lock_call('k',functon(){
 },second); 
 ~~~
 
+### gz压缩数据
+
+~~~
+$s = gz_encode(['a'=>"test"]);
+echo $s; 
+echo "解压后<br>";
+print_r(gz_decode($s));
+~~~
+
 
 ### 开源协议 
 
