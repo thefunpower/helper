@@ -380,6 +380,24 @@ pr(xcookie("ss"));
 xcookie_delete("ss");  
 ~~~
 
+### redis锁
+
+~~~
+global $redis_lock; 
+//锁前缀
+global $lock_key;
+
+$redis_lock = [
+    'host'=>'',
+    'port'=>'',
+    'auth'=>'',
+];
+
+lock_call('k',functon(){
+
+},second); 
+~~~
+
 
 ### 开源协议 
 
