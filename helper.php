@@ -957,6 +957,25 @@ if(!function_exists("get_str_ord")){
         return $arr; 
     }
 }
+if(!function_exists("gz_encode")){
+    function gz_encode($arr_or_str){
+        if(is_array($arr_or_str)){
+            $arr_or_str = json_encode($arr_or_str,JSON_UNESCAPED_UNICODE);
+        }
+        return gzencode($arr_or_str);
+    }
+}
+if(!function_exists("gz_decode")){
+    function gz_decode($str){
+        $str = gzdecode($str);
+        if(is_json($str)){
+            return json_decode($str,true);
+        }else{
+            return $str;
+        }
+    }
+}
+
 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
