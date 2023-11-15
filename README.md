@@ -155,6 +155,59 @@ echo Pdf::merger($input,$new_name);
 exit;
 ~~~
 
+### 合并PDF，包含图片
+
+~~~
+Pdf::merger_with_image($files, $output);
+~~~
+
+### PDF提取图片
+
+~~~
+Pdf::pdf_to_image($file,$saveToDir)
+~~~
+
+### 取PDF信息
+
+~~~
+Pdf::get_info($file);
+~~~
+
+返回
+~~~
+Array
+    (
+        [header] => Array
+            (
+                [ModDate] => D
+                [Creator] => Microsoft® PowerPoint® 2019
+                [CreationDate] => D
+                [Producer] => Microsoft® PowerPoint® 2019
+                [Author] => Microsoft Office User
+                [Title] => PowerPoint 演示文稿
+            )
+        文档长宽
+        [dimensions] => Array
+            (
+                [0] => 960
+                [1] => 540
+            )
+        2是横版，1是竖版
+        [dimensions_type] => 2
+    ) 
+~~~
+
+### 取PDF页数
+~~~
+Pdf::get_pages($file);
+~~~
+
+### 设置PDF信息
+~~~
+Pdf::set_info($file,$output,$arr = []);
+~~~
+其中`arr`支持`title` `author` `keywords` 
+
 ### 生成PDF table
 ~~~
 $html = '

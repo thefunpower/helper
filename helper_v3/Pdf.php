@@ -47,6 +47,34 @@ class Pdf{
         }
         return $new_file;
     }
+    /**
+     * 合并PDF,支持图片与pdf文件一起合并
+     *
+     * @param  $files   PDF绝对路径 
+     * @param  $output  PDF绝对路径 
+     */
+    public static function merger_with_image($files = [], $output)
+    {
+        $new_files = [];
+        foreach ($files as $k => $v) {
+            $ext = strtolower(substr($v, strrpos($v, '.') + 1));
+            if (in_array($ext, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
+                $new_file = self::image_to_pdf($v, $v . '.2pdf.pdf',true);
+                $files[$k] = $new_file;
+                $new_files[] = $new_file;
+            }
+        }
+        self::merger($files,$output);
+        if($new_files){
+            foreach($new_files as $v){
+                unlink($v);
+            }
+        }
+    }
+    public static function merger2($files = [], $output)
+    {
+        return self::merger_with_image($files, $output);
+    }
 	
 	/**
      * 图片转PDF
@@ -79,29 +107,7 @@ class Pdf{
         return $output;
     }
     
-    /**
-     * 合并PDF,支持图片与pdf文件一起合并
-     *
-     * @param  $files   PDF绝对路径 
-     * @param  $output  PDF绝对路径 
-     */
-    public static function merger2($files = [], $output)
-    {
-        foreach ($files as $k => $v) {
-            $ext = strtolower(substr($v, strrpos($v, '.') + 1));
-            if (in_array($ext, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
-                $files[$k] = self::image_to_pdf($v, $v . '.2pdf.pdf',true);
-            }
-        }
-        $in = "";
-        foreach ($files as $v) {
-            $in .= $v . " ";
-        }
-        $dir = get_dir($output);
-        create_dir_if_not_exists([$dir]);
-        $cmd = "pdftk $in cat output $output &";
-        exec($cmd);
-    }
+
 	/**
      * https://mpdf.github.io/ 
      */
