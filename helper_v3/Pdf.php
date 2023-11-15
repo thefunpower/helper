@@ -17,6 +17,7 @@ class Pdf{
      */
     public static function merger($data = [],$new_file)
     {
+        $str = '';
         foreach ($data as $k => $file) {
             if (!file_exists($file)) {
                 unset($data[$k]);
@@ -24,16 +25,26 @@ class Pdf{
             if(get_ext($file) !== 'pdf'){
                 unset($data[$k]);
             }
+            $str .= $file." ";
         } 
         if(!$data){
             return;
-        }  
+        }   
         $dir = get_dir($new_file);
         create_dir_if_not_exists([$dir]);
-        $merger = new Merger;
-        $merger->addIterator($data);
-        $pdf    = $merger->merge();
-        file_put_contents($new_file, $pdf);
+        exec("pdftk --version",$out);
+        if($out){
+            $cmd = "pdftk $str cat output ".$new_file;
+            exec($cmd); 
+        } else{
+            $merger = new Merger;
+            $merger->addIterator($data);
+            $pdf    = $merger->merge();
+            file_put_contents($new_file, $pdf);
+        } 
+        if(!file_exists($new_file)){
+            throw new \Exception("合并PDF失败，建议使用pdftk，安装 yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageMagick ImageMagick-devel  ghostscript -y ");            
+        }
         return $new_file;
     }
 	
