@@ -1,8 +1,4 @@
 <?php 
-/*
-* Copyright (c) 2021-2031, All rights reserved.
-* MIT LICENSE
-*/ 
 namespace helper_v3;  
 use Symfony\Component\Lock\LockFactory; 
 use Symfony\Component\Lock\Store\RedisStore;

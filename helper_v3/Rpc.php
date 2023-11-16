@@ -1,7 +1,3 @@
-<?php  
-/*
-* Copyright (c) 2021-2031, All rights reserved.
-* MIT LICENSE
-*/ 
+<?php 
 namespace helper_v3;
 class Rpc extends \rpc_php{}

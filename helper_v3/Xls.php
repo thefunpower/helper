@@ -1,8 +1,4 @@
-<?php   
-/*
-* Copyright (c) 2021-2031, All rights reserved.
-* MIT LICENSE
-*/ 
+<?php  
 namespace helper_v3;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx; 
