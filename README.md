@@ -272,7 +272,7 @@ yum install xorg-x11-server-Xvfb wkhtmltopdf  fontconfig freetype wqy-zenhei-fon
 
 PHP中调用
 ~~~
-html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = true)
+html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = false)
 ~~~
 
 如遇条形码可用 [php-barcode-generator](https://github.com/picqer/php-barcode-generator)

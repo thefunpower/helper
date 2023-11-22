@@ -8,10 +8,10 @@ class Pdf{
     /**
     * HTML转PDF 
     */
-    public static function html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = true){
-        $cmd = "xvfb-run --server-args='-screen 0, 1024x768x24' wkhtmltopdf --encoding utf-8 ".$input_html_file." ".$output_pdf_file;
+    public static function html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = false){
+        $cmd = "/usr/bin/xvfb-run  --server-args='-screen 0, 1024x768x24' /usr/bin/wkhtmltopdf --encoding utf-8 ".$input_html_file." ".$output_pdf_file. " 2>&1";
         if($exec){
-            exec($cmd);
+           exec($cmd); 
         }
         if($return_cmd){
             return $cmd;
