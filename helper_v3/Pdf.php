@@ -5,6 +5,18 @@ use Mpdf\Config\FontVariables;
 use Mpdf\Mpdf;
 use iio\libmergepdf\Merger; 
 class Pdf{  
+    /**
+    * HTML转PDF 
+    */
+    public static function html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = true){
+        $cmd = "xvfb-run --server-args='-screen 0, 1024x768x24' wkhtmltopdf --encoding utf-8 ".$input_html_file." ".$output_pdf_file;
+        if($exec){
+            exec($cmd);
+        }
+        if($return_cmd){
+            return $cmd;
+        }
+    }
 	/**
      * 合并pdf
      * 输入的数组必须是.pdf格式
@@ -266,6 +278,5 @@ class Pdf{
         $cmd .= " ".$file."  -o  ".$output." &";
         exec($cmd);
     } 
-
 
 }

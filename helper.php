@@ -975,7 +975,11 @@ if(!function_exists("gz_decode")){
         }
     }
 }
-
+if(!function_exists("html_to_pdf")){
+    function html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = true){
+        return helper_v3\Pdf::html_to_pdf($input_html_file,$output_pdf_file,$return_cmd,$exec);
+    }
+}
 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';

@@ -129,6 +129,9 @@ Ftp::end();
 更多方法 https://github.com/Nicolab/php-ftp-client
 
 ## PDF
+
+安装依赖
+
 ~~~ 
 yum install pdftk   pdftk-java  poppler-utils perl-Image-ExifTool.noarch  ImageMagick ImageMagick-devel  ghostscript -y
 ~~~
@@ -258,6 +261,26 @@ th,td {
     $mpdf->WriteHTML($html);
     $mpdf->Output();
 ~~~
+
+## HTML转PDF
+
+安装依赖
+
+~~~
+yum install xorg-x11-server-Xvfb wkhtmltopdf  fontconfig freetype wqy-zenhei-fonts wqy-microhei-fonts 
+~~~
+
+PHP中调用
+~~~
+html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = true)
+~~~
+
+如遇条形码可用 [php-barcode-generator](https://github.com/picqer/php-barcode-generator)
+
+~~~
+composer require picqer/php-barcode-generator
+~~~
+
 
 ## Xls 
 ~~~
