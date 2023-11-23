@@ -118,12 +118,26 @@ class Pdf{
 
 	/**
      * https://mpdf.github.io/ 
-     */
+     */ 
     public static function init($option = []){
         return self::mpdfInit('',$option);
     }
     public static function mpdfInit($font_size = 9,$more_options = [])
     { 
+        if($more_options['font_size']){
+            $font_size = $more_options['font_size'];
+            unset($more_options['font_size']);
+        }
+        $fontdata_append = [];
+        if($more_options['fontdata']){
+            $fontdata_append = $more_options['fontdata'];
+            unset($more_options['fontdata']);
+        }
+        $font_dir_append = [];
+        if($more_options['fontDir']){
+            $font_dir_append = $more_options['fontDir'];
+            unset($more_options['fontDir']);
+        }
         $tempDir = $more_options['tempDir']?:PATH . '/data/runtime';
         unset($more_options['tempDir']);
         if (!is_dir($tempDir)) {
@@ -131,25 +145,49 @@ class Pdf{
         }
         $defaultConfig = (new  ConfigVariables())->getDefaults();
         $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new  FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
+        $defaultFontConfig = (new  FontVariables())->getDefaults(); 
         $options_default = [
             'tempDir' => $tempDir,
             'default_font_size' => $font_size?:9,
             'fontDir' => array_merge($fontDirs, [
                 HELPER_DIR . '/font',
-            ]),
-            'fontdata' => $fontData + [
+            ],$font_dir_append),
+            'fontdata' => $defaultFontConfig['fontdata'] + [
+                //阿里妈妈方圆体
+                'alifanyuan' => [
+                    'R' => 'AlimamaFangYuanTiVF-Thin.ttf',
+                    'I' => 'AlimamaFangYuanTiVF-Thin.ttf',
+                ],
+                //阿里妈妈数黑体
+                'alishuhei' => [
+                    'R' => 'AlimamaShuHeiTi-Bold.ttf',
+                    'I' => 'AlimamaShuHeiTi-Bold.ttf',
+                ],
+                //阿里巴巴普惠体
+                'puhuiti' => [
+                    'R' => 'AlibabaPuHuiTi-3-55-Regular.ttf',
+                    'I' => 'AlibabaPuHuiTi-3-55-Regular.ttf',
+                ],
+                'puhuitithin' => [
+                    'R' => 'AlibabaPuHuiTi-3-35-Thin.ttf',
+                    'I' => 'AlibabaPuHuiTi-3-35-Thin.ttf',
+                ], 
+                //仿宋体
                 'simfang' => [
                     'R' => 'simfang.ttf',
                     'I' => 'simfang.ttf',
                 ],
-                'arial' => [
-                    'R' => 'arial.ttf',
-                    'I' => 'arial.ttf',
+                //黑体
+                'simhei'=> [
+                    'R' => 'simhei.ttf',
+                    'I' => 'simhei.ttf', 
                 ],
+                'arial' => [
+                    'R' => 'arial1.ttf',
+                    'I' => 'arial.ttf',
+                ] + $fontdata_append,
             ],
-            'default_font' => 'simfang'
+            'default_font' => $more_options['default_font']?:'puhuitithin'
         ];
         $options = array_merge($options_default,$more_options);
         $pdf = new Mpdf($options);
