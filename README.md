@@ -137,17 +137,11 @@ Ftp::end();
 阿里妈妈数黑体   alishuhei
 阿里巴巴普惠体   puhuiti
 阿里巴巴普惠体细 puhuitithin
+google字体      notosanssc 
 ~~~
+ 
 
-商用收费字体,具体请联系字体方。
-
-~~~
-仿宋体  simfang
-黑体    simfang
-arial   arial  
-~~~
-
-默认使用的免费的 阿里巴巴普惠体细。
+默认使用 notosanssc。
 
 
 ~~~

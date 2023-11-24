@@ -168,26 +168,18 @@ class Pdf{
                     'R' => 'AlibabaPuHuiTi-3-55-Regular.ttf',
                     'I' => 'AlibabaPuHuiTi-3-55-Regular.ttf',
                 ],
+                //阿里巴巴普惠体 细
                 'puhuitithin' => [
                     'R' => 'AlibabaPuHuiTi-3-35-Thin.ttf',
                     'I' => 'AlibabaPuHuiTi-3-35-Thin.ttf',
                 ], 
-                //仿宋体
-                'simfang' => [
-                    'R' => 'simfang.ttf',
-                    'I' => 'simfang.ttf',
-                ],
-                //黑体
-                'simhei'=> [
-                    'R' => 'simhei.ttf',
-                    'I' => 'simhei.ttf', 
-                ],
-                'arial' => [
-                    'R' => 'arial1.ttf',
-                    'I' => 'arial.ttf',
-                ] + $fontdata_append,
-            ],
-            'default_font' => $more_options['default_font']?:'puhuitithin'
+                //google字体
+                'notosanssc' => [
+                    'R' => 'NotoSansSC-Regular.ttf',
+                    'I' => 'NotoSansSC-Regular.ttf',
+                ] 
+            ] + $fontdata_append,
+            'default_font' => $more_options['default_font']?:'notosanssc'
         ];
         $options = array_merge($options_default,$more_options);
         $pdf = new Mpdf($options);
