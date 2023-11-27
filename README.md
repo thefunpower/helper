@@ -512,12 +512,7 @@ echo "解压后<br>";
 print_r(gz_decode($s));
 ~~~
 
-### SCSS  
-
-~~~
-//设置导入scss的目录
-set_scss_path(PATH.'/scss'); 
-~~~
+### SCSS   
 
 scss链接
 ~~~
