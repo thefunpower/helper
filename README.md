@@ -512,6 +512,35 @@ echo "解压后<br>";
 print_r(gz_decode($s));
 ~~~
 
+### SCSS
+
+需`PATH`或`WWW_PATH`常量
+
+define('WWW_PATH',__DIR__);
+
+~~~
+//设置导入scss的目录
+set_scss_path(PATH.'/scss'); 
+~~~
+
+scss链接
+~~~
+<link rel="stylesheet" href="<?=scss("app.scss",true)?>" />
+~~~
+
+
+也可以直接调用
+~~~
+<style>
+<?php 
+echo scss("
+ \$color: #abc;
+ div { color: lighten(\$color, 20%); }
+");
+<?php }?>
+</style>
+~~~
+
 
 ### 开源协议 
 
