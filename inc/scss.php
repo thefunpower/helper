@@ -1,5 +1,9 @@
 <?php 
 
+if(defined('PATH')){
+	set_scss_path(PATH);
+}
+
 function set_scss_path($path){ 
 	return SCSS::init()->set_path($path);
 } 
