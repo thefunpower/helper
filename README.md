@@ -541,6 +541,28 @@ echo scss("
 </style>
 ~~~
 
+scss文件语法，参考 http://www.uinio.com/Web/Scss/
+
+~~~
+$color: red;
+.navigation {
+    ul {
+        line-height: 20px;
+        color: blue;
+        a {
+            color: $color;
+        }
+
+    }
+}
+
+.footer {
+    .copyright {
+        color: silver;
+    }
+}
+~~~
+
 
 ### 开源协议 
 
