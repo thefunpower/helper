@@ -512,11 +512,7 @@ echo "解压后<br>";
 print_r(gz_decode($s));
 ~~~
 
-### SCSS
-
-需`PATH`或`WWW_PATH`常量
-
-define('WWW_PATH',__DIR__);
+### SCSS  
 
 ~~~
 //设置导入scss的目录
