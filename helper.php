@@ -411,8 +411,10 @@ function update_make_rand_code($node_id){
     db_update("rand_code",['status'=>1],['nid'=>$node_id]);
 }
 /**
-* 创建锁定操作
-* 默认锁定1分钟
+*  锁功能已替代
+lock_call('k',functon(){
+
+},second); 
 */
 function set_lock($key,$exp_time = 60){
     cache("lock:".$key,1,$exp_time);
