@@ -24,7 +24,7 @@ function scss($css,$is_cached = false){
 	}
 	$dir = get_dir($file);
 	create_dir_if_not_exists([$dir]);
-	file_put_contents($file);
+	file_put_contents($file,$code);
 	return $url;
 } 
  
@@ -33,6 +33,7 @@ class SCSS{
 	static $obj;
 	public function __construct(){
 		$this->compiler = new ScssPhp\ScssPhp\Compiler(); 
+		$this->compiler->setOutputStyle(ScssPhp\ScssPhp\OutputStyle::COMPRESSED);
 	}
 	public static function init(){
 		if(!self::$obj){
