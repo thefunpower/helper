@@ -986,10 +986,10 @@ if(!function_exists("get_barcode")){
     /**
     * https://github.com/picqer/php-barcode-generator/blob/main/src/BarcodeGenerator.php
     * C128 C128A C128B C128C C93 EAN13 EAN8 EAN2
-    */
-    function get_barcode($code,$type = 'C128'){
+    */ 
+    function get_barcode($code,$type = 'C128', $widthFactor = 2, $height = 30,$foregroundColor = [0, 0, 0]){
         $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
-        return "data:image/png;base64,".base64_encode($generator->getBarcode($code, $type));
+        return "data:image/png;base64,".base64_encode($generator->getBarcode($code, $type,$widthFactor, $height,$foregroundColor));
     }
 }
 
