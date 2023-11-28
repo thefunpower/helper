@@ -22,7 +22,8 @@
         "phpoffice/phpspreadsheet": "*",
         "spatie/array-to-xml": "*", 
         "imangazaliev/didom": "^2.0",
-        "scssphp/scssphp": "^1"
+        "scssphp/scssphp": "^1",
+        "picqer/php-barcode-generator": "^2"
     },
     "autoload": { 
         "files": [ 

@@ -982,6 +982,16 @@ if(!function_exists("html_to_pdf")){
         return helper_v3\Pdf::html_to_pdf($input_html_file,$output_pdf_file,$return_cmd,$exec);
     }
 }
+if(!function_exists("get_barcode")){
+    /**
+    * https://github.com/picqer/php-barcode-generator/blob/main/src/BarcodeGenerator.php
+    * C128 C128A C128B C128C C93 EAN13 EAN8 EAN2
+    */
+    function get_barcode($code,$type = 'C128'){
+        $generator = new \Picqer\Barcode\BarcodeGeneratorPNG();
+        return "data:image/png;base64,".base64_encode($generator->getBarcode($code, $type));
+    }
+}
 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
