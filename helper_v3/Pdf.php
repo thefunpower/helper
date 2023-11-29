@@ -199,7 +199,7 @@ class Pdf{
         $md5 = md5($file);
         for($i=1;$i<=$pages;$i++){
             $name = '/'.$md5.'-'.$i.'.jpg';  
-            $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file." &";
+            $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file." ";
             exec($cmd);
             $files[] = $name;
         }   
