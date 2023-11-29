@@ -993,6 +993,29 @@ if(!function_exists("get_barcode")){
     }
 }
 
+if(!function_exists("text_add_br")){
+    function text_add_br($text,$w,$br = '<br>'){
+        if(!$text){
+            return;
+        }
+        $len = get_gbk_len($text);  
+        if($len > $w){
+            $total = ceil($len/$w);
+            $new_text = '';
+            for($i = 0;$i < $total;$i++){
+                $j = $i*$w;
+                $new_text .= gbk_substr($text,$j,$w).$br;
+            }
+            $text = $new_text;
+            if(strpos($text,$br)!==false){
+                $sub = 0 - strlen($br);
+                $text = substr($text,0,$sub);
+            } 
+        } 
+        return $text; 
+    } 
+}
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
