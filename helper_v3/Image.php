@@ -4,7 +4,7 @@ class Image{
 	/**
 	* 合并多个图片
 	*/
-	public static function merger($image = [],$output){ 
+	public static function merger($image = [],$output,$quality = 75 ){ 
 		$flag = false;
 		$i = '';
 		foreach ($image as $v){
@@ -18,7 +18,7 @@ class Image{
 		}
 		$dir = get_dir($output);
         create_dir_if_not_exists([$dir]);  
-		exec("convert $i -append $output ");
+		exec("convert $i -append -quality ".$quality."% $output ");
 	}
 }
 
