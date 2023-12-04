@@ -17,6 +17,7 @@ function  copy_base64_data(){
 	if($vue){
 		$vue->methd("copy_base64_data(data)",$str);
 		return;
-	}
-    return $str;
-  }
+	}else{
+		return $str;	
+	}    
+}
