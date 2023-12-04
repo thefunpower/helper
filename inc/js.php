@@ -15,7 +15,7 @@ function  copy_base64_data(){
 	    navigator.clipboard.write([new ClipboardItem({ [type]: blob })]); 
 	";
 	if($vue){
-		$vue->methd("copy_base64_data(data)",$str);
+		$vue->method("copy_base64_data(data)",$str);
 		return;
 	}else{
 		return $str;	
