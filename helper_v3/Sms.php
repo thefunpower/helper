@@ -2,8 +2,7 @@
 namespace helper_v3;
 /*
 * 短信
-* 接口文档：http://china-message.cn:7002/docs/index.html#!shufu-plain.md
-* 购买短信请联系微信 sunkangchina
+* 接口文档：http://china-message.cn:7002/docs/index.html#!shufu-plain.md 
 * 此短信接口为直连三大运营商接口。属于直连通道。 
 */
 
