@@ -1016,8 +1016,44 @@ if(!function_exists("text_add_br")){
     } 
 }
 
+/**
+ * 取server headers
+ * host connection cache-control sec-ch-ua-platform user-agent accept accept-encoding accept-language cookie
+ */
+if(!function_exists("get_server_headers")){
+    function get_server_headers($name = '')
+    {
+        static $header;
+        if($header) {
+            return $name ? $header[strtolower($name)] : $header;
+        }
+        if (function_exists('apache_request_headers') && $result = apache_request_headers()) {
+            $header = [];
+            foreach($result as $k => $v) {
+                $header[strtolower($k)] = $v;
+            }
+        } else {
+            $header = [];
+            $server = $_SERVER;
+            foreach ($server as $key => $val) {
+                if (str_starts_with($key, 'HTTP_')) {
+                    $key          = str_replace('_', '-', strtolower(substr($key, 5)));
+                    $header[$key] = $val;
+                }
+            }
+            if (isset($server['CONTENT_TYPE'])) {
+                $header['content-type'] = $server['CONTENT_TYPE'];
+            }
+            if (isset($server['CONTENT_LENGTH'])) {
+                $header['content-length'] = $server['CONTENT_LENGTH'];
+            }
+        }
+        return $name ? $header[strtolower($name)] : $header;
+    }
+}
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
 include __DIR__.'/inc/scss.php'; 
-include __DIR__.'/inc/js.php'; 
+include __DIR__.'/inc/js.php';  
