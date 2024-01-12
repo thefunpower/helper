@@ -1051,7 +1051,37 @@ if(!function_exists("get_server_headers")){
         return $name ? $header[strtolower($name)] : $header;
     }
 }
-
+/**
+* 输出js css
+*/
+if(!function_exists("output_js_css")){
+    function output_js_css($js = '', $css = '')
+    {
+        if(function_exists("cdn_url")){
+            $cdn_url = cdn_url(); 
+        } 
+        if($css) {
+            if(is_array($css)) {
+                foreach($css as $v) {
+                    echo "<link rel='stylesheet' href='" . $cdn_url . $v . "'/>";
+                }
+            }
+            if(is_string($css)) {
+                echo "<link rel='stylesheet' href='" . $cdn_url . $css . "'/>";
+            }
+        }
+        if($js) {
+            if(is_array($js)) {
+                foreach($js as $v) {
+                    echo "<script type='text/javascript' src='" . $cdn_url . $v . "'></script>";
+                }
+            }
+            if(is_string($js)) {
+                echo "<script type='text/javascript' src='" . $cdn_url . $js . "'></script>";
+            }
+        }
+    }
+}
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
