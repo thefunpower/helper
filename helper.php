@@ -120,12 +120,16 @@ function array_to_pager($arr)
 * 返回URL路径，不含有域名部分
 */
 function get_url_remove_http($url){
-    if(strpos($url,'://')===false){
+    if(strpos($url, '://') === false) {
         return $url;
     }
-    $url = substr($url,strpos($url,'://')+3);
-    $url = substr($url,strpos($url,'/'));
-    return trim($url);
+    $url = substr($url, strpos($url, '://') + 3);
+    $url = substr($url, strpos($url, '/'));
+    $url =  trim($url);
+    if(strpos($url, '://') !== false) { 
+        $url = get_url_remove_http($url);
+    }
+    return $url;
 }
 /**
 * 取后缀
