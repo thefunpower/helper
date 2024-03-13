@@ -180,6 +180,7 @@ function get_remote_file($url,$is_json = false){
 }
 /**
 * 下载文件
+* 建议使用 download_file_safe
 */
 function download_file($url,$contain_http = false){
     $host = cdn_url();
@@ -197,6 +198,34 @@ function download_file($url,$contain_http = false){
     }else{
         return $url;    
     }    
+}
+/**
+* 下载资源文件到本地
+*/
+function download_file_safe($url,$mimes = ['image/*','video/*'],$cons = [],$contain_http = false){ 
+    $flag = false;
+    if($cons){
+        foreach($cons as $v){
+            if(strpos($url,$v)!==false){
+                $flag = true;
+                break;
+            }
+        }
+    }else{
+        $flag = true;
+    }
+    if($flag){ 
+        $content_type = get_mime($url); 
+        foreach($mimes as $v){
+            $v = str_replace("*","",$v);
+            if(strpos($content_type,$v) !== 'false'){
+                $new_url = download_file($url,$contain_http);
+                if($new_url){
+                    return $new_url; 
+                }
+            }
+        } 
+    } 
 }
 /**
 * 下载远程文件
