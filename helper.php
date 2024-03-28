@@ -179,11 +179,14 @@ function get_mime($url)
 * 取mime
 * @param $content 文件内容，可以是通过file_get_contents取到的
 */
-function get_mime_content($content)
+function get_mime_content($content, $just_return_ext = false)
 {
     $finfo = finfo_open(FILEINFO_MIME_TYPE);
     $mime_type = finfo_buffer($finfo, $content);
     finfo_close($finfo);
+    if($just_return_ext && $mime_type) {
+        return substr($mime_type, strpos($mime_type, '/') + 1);
+    }
     return $mime_type;
 }
 /**
