@@ -155,7 +155,8 @@ function get_ext_by_url($url){
     return $find;
 }
 /**
-* 取mime
+* 通过URL取mime
+* @param $url URL
 */
 function get_mime($url)
 { 
@@ -165,6 +166,17 @@ function get_mime($url)
         $type = mime_content_type($url); 
     }
     return $type;
+}
+/**
+* 取mime
+* @param $content 文件内容，可以是通过file_get_contents取到的
+*/
+function get_mime_content($content)
+{ 
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);  
+    $mime_type = finfo_buffer($finfo, $content);  
+    finfo_close($finfo); 
+    return $mime_type;
 }
 /**
 * 获取远程URL内容
