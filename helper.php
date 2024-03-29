@@ -1185,6 +1185,69 @@ if(!function_exists("output_js_css")) {
         }
     }
 }
+/**
+ * 解析文件内容
+ * 支持 zip pdf xml
+ * pdf读取 yum install poppler-utils
+ * odf转pdf  pip install mupdf
+ *
+ * file_parse(__DIR__.'/1.zip',__DIR__."/tmp");
+ * file_parse(__DIR__.'/2.pdf',__DIR__);
+ */
+function file_parse($file, $zip_output_dir = '', $need_remove = false)
+{
+    $res = [];
+    $ext = get_ext($file);
+    $key = str_replace($zip_output_dir, '', $file);
+    if(substr($key, 0, 1) == '/') {
+        $key = substr($key, 1);
+    }
+    $tmp_path = PATH.'/data/tmp/'.md5($file);
+    create_dir_if_not_exists([$tmp_path]);
+    switch ($ext) {
+        case 'zip':
+            $extract_dir = get_dir($zip_output_dir);
+            create_dir_if_not_exists([$extract_dir]);
+            zip_extract($file, $zip_output_dir);
+            $all = get_deep_dir($zip_output_dir);
+            foreach($all as $k => $v) {
+                if(!is_file($v)) {
+                    unset($all[$k]);
+                }
+                if(in_array(get_ext($v), ['zip','7z','gz'])) {
+                    unset($all[$k]);
+                }
+            }
+            foreach($all as $v) {
+                $res = array_merge($res, file_parse($v, $zip_output_dir));
+            }
+            if($need_remove) {
+                unlink($file);
+            }
+            //删除目录
+            exec("rm -rf $tmp_path");
+            break;
+        case 'xml':
+            $content = xml2array(file_get_contents($file));
+            $res[$key] = $content;
+            break;
+        case 'pdf':
+            $output_txt = $tmp_path.md5($file).'.txt';
+            exec("pdftotext $file  $output_txt");
+            $res[$key] = file_get_contents($output_txt);
+            unlink($output_txt);
+            break;
+        case 'ofd':
+            $zip = $tmp_path.'ofd'.md5($file).'.zip';
+            copy($file, $zip);
+            $res = array_merge($res, file_parse($zip, $tmp_path, $need_remove = true));
+            break;
+        default:
+            // code...
+            break;
+    }
+    return $res;
+}
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
