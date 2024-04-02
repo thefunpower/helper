@@ -1186,13 +1186,17 @@ if(!function_exists("output_js_css")) {
     }
 }
 /**
- * 解析文件内容
+ * 解析文件内容 
+ * 
  * 支持 zip pdf xml
  * pdf读取 yum install poppler-utils
  * odf转pdf  pip install mupdf
  *
  * file_parse(__DIR__.'/1.zip',__DIR__."/tmp");
- * file_parse(__DIR__.'/2.pdf',__DIR__);
+ * file_parse(__DIR__.'/2.xml',__DIR__);
+ * 
+ * @parma $file 文件支持 zip pdf xml ofd
+ * @parma $zip_output_dir 主要是用于返回数组的key时把路径替换掉
  */
 function file_parse($file, $zip_output_dir = '', $need_remove = false)
 {
@@ -1202,10 +1206,13 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
     if(substr($key, 0, 1) == '/') {
         $key = substr($key, 1);
     }
-    $tmp_path = PATH.'/data/tmp/'.md5($file);
-    create_dir_if_not_exists([$tmp_path]);
+    $tmp_path = PATH.'/data/tmp/'.md5($file).'/'; 
     switch ($ext) {
         case 'zip':
+            create_dir_if_not_exists([$tmp_path]);
+            if(!$zip_output_dir){
+                $zip_output_dir = $tmp_path;
+            }
             $extract_dir = get_dir($zip_output_dir);
             create_dir_if_not_exists([$extract_dir]);
             zip_extract($file, $zip_output_dir);
@@ -1232,12 +1239,14 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
             $res[$key] = $content;
             break;
         case 'pdf':
+            create_dir_if_not_exists([$tmp_path]);
             $output_txt = $tmp_path.md5($file).'.txt';
             exec("pdftotext $file  $output_txt");
             $res[$key] = file_get_contents($output_txt);
             unlink($output_txt);
             break;
         case 'ofd':
+            create_dir_if_not_exists([$tmp_path]);
             $zip = $tmp_path.'ofd'.md5($file).'.zip';
             copy($file, $zip);
             $res = array_merge($res, file_parse($zip, $tmp_path, $need_remove = true));
