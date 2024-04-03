@@ -498,7 +498,7 @@ $redis_lock = [
     'auth'=>'',
 ];
 
-lock_call('k',functon(){
+lock_call('k',function(){
 
 },second); 
 ~~~
