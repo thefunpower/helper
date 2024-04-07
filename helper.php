@@ -1257,6 +1257,16 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
     }
     return $res;
 }
+/**
+* 优化数量显示
+* 1.10显示为1.1
+* 1.05显示为1.05
+* 1.00显示为1
+*/
+function show_number($num){
+    return rtrim(rtrim($num, '0'), '.');
+}
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
