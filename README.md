@@ -559,8 +559,7 @@ $color: red;
 $blob = line_bezier([
     'front_border'=>'#000',
     'fill_color'=>'red',
-    'background_color '=>'#fff',
-    'front_border'=>'#000',
+    'background_color '=>'#fff', 
     'stroke_opacity'=>1,
     'stroke_width'=>1,
     'data'=>[
