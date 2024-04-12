@@ -1277,8 +1277,7 @@ function line_bezier($opt = [], $return = 'base64')
 {
     $front_border = $opt['front_border'] ?? '#000';
     $fill_color = $opt['fill_color'] ?? 'red';
-    $background_color = $opt['front_border'] ?? '#fff';
-    $front_border = $opt['front_border'] ?? '#000';
+    $background_color = $opt['background_color'] ?? '#fff'; 
     $stroke_opacity = $opt['stroke_opacity'] ?? '1';
     $stroke_width = $opt['stroke_width'] ?? '1';
     $width = $opt['width'] ?? '600';
