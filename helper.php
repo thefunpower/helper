@@ -1186,15 +1186,15 @@ if(!function_exists("output_js_css")) {
     }
 }
 /**
- * 解析文件内容 
- * 
+ * 解析文件内容
+ *
  * 支持 zip pdf xml
  * pdf读取 yum install poppler-utils
  * odf转pdf  pip install mupdf
  *
  * file_parse(__DIR__.'/1.zip',__DIR__."/tmp");
  * file_parse(__DIR__.'/2.xml',__DIR__);
- * 
+ *
  * @parma $file 文件支持 zip pdf xml ofd
  * @parma $zip_output_dir 主要是用于返回数组的key时把路径替换掉
  */
@@ -1206,11 +1206,11 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
     if(substr($key, 0, 1) == '/') {
         $key = substr($key, 1);
     }
-    $tmp_path = PATH.'/data/tmp/'.md5($file).'/'; 
+    $tmp_path = PATH.'/data/tmp/'.md5($file).'/';
     switch ($ext) {
         case 'zip':
             create_dir_if_not_exists([$tmp_path]);
-            if(!$zip_output_dir){
+            if(!$zip_output_dir) {
                 $zip_output_dir = $tmp_path;
             }
             $extract_dir = get_dir($zip_output_dir);
@@ -1263,8 +1263,56 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
 * 1.05显示为1.05
 * 1.00显示为1
 */
-function show_number($num){
+function show_number($num)
+{
     return rtrim(rtrim($num, '0'), '.');
+}
+/**
+* 贝塞尔
+* @param $return blob | base64
+* 当为blob时 header("Content-Type: image/png");echo $blob;exit;
+* 当为base64时 echo "<img src='data:image/png;base64,".$blob."' />";
+*/
+function line_bezier($opt = [], $return = 'base64')
+{
+    $front_border = $opt['front_border'] ?? '#000';
+    $fill_color = $opt['fill_color'] ?? 'red';
+    $background_color = $opt['front_border'] ?? '#fff';
+    $front_border = $opt['front_border'] ?? '#000';
+    $stroke_opacity = $opt['stroke_opacity'] ?? '1';
+    $stroke_width = $opt['stroke_width'] ?? '1';
+    $width = $opt['width'] ?? '600';
+    $height = $opt['height'] ?? '500';
+    $stroke_width = $opt['stroke_width'] ?? '1';
+    $data = $opt['data'];
+    $draw = new \ImagickDraw();
+    $front_border = new \ImagickPixel($front_border);
+    $fill_color = new \ImagickPixel($fill_color);
+    $draw->setStrokeOpacity($stroke_opacity);
+    $draw->setStrokeColor($front_border);
+    $draw->setFillColor($fill_color);
+    $draw->setStrokeWidth($stroke_width);
+    foreach($data as $k => $v) {
+        if(is_string($k)) {
+            call_user_func_array([$draw, $k], $v);
+        } else {
+            $draw->bezier($v);
+        }
+    }
+    $imagick = new \Imagick();
+    $imagick->newImage($width, $height, $background_color);
+    $imagick->setImageFormat("png");
+    $imagick->drawImage($draw);
+    $blob = $imagick->getImageBlob();
+    switch ($return) {
+        case 'blob':
+            return $blob;
+            break;
+        case 'base64':
+            return base64_encode($blob);
+            break;
+    }
+    return base64_encode($blob);
 }
 
 include __DIR__.'/inc/x.php';
