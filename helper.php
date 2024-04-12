@@ -1293,6 +1293,9 @@ function line_bezier($opt = [], $return = 'base64')
     $draw->setStrokeWidth($stroke_width);
     foreach($data as $k => $v) {
         if(is_string($k)) {
+            if(strpos($k,'#')!==false){
+                $k = substr($k,0,strpos($k,'#'));
+            }
             call_user_func_array([$draw, $k], $v);
         } else {
             $draw->bezier($v);
