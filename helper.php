@@ -1316,7 +1316,22 @@ function line_bezier($opt = [], $return = 'base64')
     }
     return base64_encode($blob);
 }
-
+/**
+* 数字转中文，非金额读法
+*/
+function num_to_chinese($num)
+{
+    $chinese_num_arr = array(
+        '零', '一', '二', '三', '四', '五', '六', '七', '八', '九'
+    );
+    $chinese_num_str = '';
+    $num_str = (string) $num;
+    $len = strlen($num_str);
+    for ($i = 0; $i < $len; $i++) {
+        $chinese_num_str .= $chinese_num_arr[$num_str[$i]];
+    }
+    return $chinese_num_str;
+} 
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
