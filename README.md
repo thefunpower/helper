@@ -598,6 +598,18 @@ header("Content-Type: image/png");
 echo $blob;exit;
 ~~~
 
+### 获取本地音视频时长
+
+需手动安装getid3
+~~~
+composer require james-heinrich/getid3 
+~~~
+
+使用
+
+~~~
+get_video_time($video_local_path)
+~~~
 
 ### 开源协议 
 

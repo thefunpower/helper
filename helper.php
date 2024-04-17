@@ -1332,6 +1332,24 @@ function num_to_chinese($num)
     }
     return $chinese_num_str;
 } 
+/**
+* 获取本地音视频时长
+* https://github.com/JamesHeinrich/getID3
+* composer require james-heinrich/getid3 
+*/
+function get_video_time($video_local_path,$ret_time = true){ 
+    if(!file_exists($video_local_path)){
+        return 0;
+    }
+    $id3 = new \getID3();
+    $info = @$id3->analyze($video_local_path); 
+    $second= $info['playtime_seconds'];
+    if($ret_time){
+        return (int)$second;     
+    }else{
+        return $info;
+    } 
+}
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
