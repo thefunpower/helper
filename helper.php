@@ -1241,7 +1241,7 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
         case 'pdf':
             create_dir_if_not_exists([$tmp_path]);
             $output_txt = $tmp_path.md5($file).'.txt';
-            exec("pdftotext $file  $output_txt");
+            exec("pdftotext -layout $file  $output_txt");
             $res[$key] = file_get_contents($output_txt);
             unlink($output_txt);
             break;
@@ -1266,6 +1266,14 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
 function show_number($num)
 {
     return rtrim(rtrim($num, '0'), '.');
+}
+/**
+* 取字符中的数字
+*/
+function get_str_number($input){
+    $pattern = '/(\d+(\.\d+)?)/';
+    preg_match_all($pattern, $input, $matches);
+    return $matches[1]; 
 }
 /**
 * 贝塞尔
