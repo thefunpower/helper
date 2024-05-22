@@ -1270,10 +1270,11 @@ function show_number($num)
 /**
 * 取字符中的数字
 */
-function get_str_number($input){
+function get_str_number($input)
+{
     $pattern = '/(\d+(\.\d+)?)/';
     preg_match_all($pattern, $input, $matches);
-    return $matches[1]; 
+    return $matches[1];
 }
 /**
 * 贝塞尔
@@ -1285,7 +1286,7 @@ function line_bezier($opt = [], $return = 'base64')
 {
     $front_border = $opt['front_border'] ?? '#000';
     $fill_color = $opt['fill_color'] ?? 'red';
-    $background_color = $opt['background_color'] ?? '#fff'; 
+    $background_color = $opt['background_color'] ?? '#fff';
     $stroke_opacity = $opt['stroke_opacity'] ?? '1';
     $stroke_width = $opt['stroke_width'] ?? '1';
     $width = $opt['width'] ?? '600';
@@ -1301,8 +1302,8 @@ function line_bezier($opt = [], $return = 'base64')
     $draw->setStrokeWidth($stroke_width);
     foreach($data as $k => $v) {
         if(is_string($k)) {
-            if(strpos($k,'#')!==false){
-                $k = substr($k,0,strpos($k,'#'));
+            if(strpos($k, '#') !== false) {
+                $k = substr($k, 0, strpos($k, '#'));
             }
             call_user_func_array([$draw, $k], $v);
         } else {
@@ -1339,25 +1340,55 @@ function num_to_chinese($num)
         $chinese_num_str .= $chinese_num_arr[$num_str[$i]];
     }
     return $chinese_num_str;
-} 
+}
 /**
 * 获取本地音视频时长
 * https://github.com/JamesHeinrich/getID3
-* composer require james-heinrich/getid3 
+* composer require james-heinrich/getid3
 */
-function get_video_time($video_local_path,$ret_time = true){ 
-    if(!file_exists($video_local_path)){
+function get_video_time($video_local_path, $ret_time = true)
+{
+    if(!file_exists($video_local_path)) {
         return 0;
     }
     $id3 = new \getID3();
-    $info = @$id3->analyze($video_local_path); 
-    $second= $info['playtime_seconds'];
-    if($ret_time){
-        return (int)$second;     
-    }else{
+    $info = @$id3->analyze($video_local_path);
+    $second = $info['playtime_seconds'];
+    if($ret_time) {
+        return (int)$second;
+    } else {
         return $info;
-    } 
+    }
 }
+/**
+* 目录 复制到 另一个目录
+*/
+function copy_dir($source, $dest)
+{
+    if(is_dir($dest)) {
+        return;
+    }
+    if (!is_dir($dest)) {
+        mkdir($dest);
+    }
+    $dir = dir($source);
+    while (false !== ($entry = $dir->read())) {
+        if ($entry == "." || $entry == "..") {
+            continue;
+        }
+        $source_path = $source . '/' . $entry;
+        $dest_path = $dest . '/' . $entry;
+        if (is_dir($source_path)) {
+            copy_dir($source_path, $dest_path);
+        } else {
+            $new_dir = get_dir($dest_path);
+            create_dir_if_not_exists([$new_dir]);
+            copy($source_path, $dest_path);
+        }
+    }
+    $dir->close();
+}
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
