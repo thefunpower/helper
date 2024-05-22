@@ -611,6 +611,28 @@ composer require james-heinrich/getid3
 get_video_time($video_local_path)
 ~~~
 
+### BLOCK 
+
+1.写CSS文件
+
+~~~
+<?php helper_v3\Block::start('css');?>
+#app{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+} 
+<?php helper_v3\Block::end();?>
+~~~
+
+2.输出
+
+~~~
+<?php 
+helper_v3\Block::output();
+?>
+~~~
+
+
 ### 开源协议 
 
 [Apache License 2.0](LICENSE)
