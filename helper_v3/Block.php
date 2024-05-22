@@ -51,7 +51,7 @@ class Block
         if(!file_exists($path)) {
             $dir = get_dir($path);
             create_dir_if_not_exists([$dir]);
-            do_action("output_css_js",$content);
+            do_action("output_css_js_content",$content);
             file_put_contents($path, $content);
         }
     }
