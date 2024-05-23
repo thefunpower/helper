@@ -140,15 +140,18 @@ function get_url_remove_http($url)
 }
 /**
 * 取后缀
-* add_action("get_ext_by_url",function($url){
-*    return 'pdf';
+* add_action("get_ext_by_url",function(&$data){
+*    $url = $data['url'];
+*    $data['ext'] = 'pdf';
 * });
 */
 function get_ext_by_url($url)
 {
-    $hook = do_action("get_ext_by_url",$url);
-    if($hook){
-        return $hook;
+    $data['url'] = $url;
+    $data['ext'] = '';
+    do_action("get_ext_by_url",$data); 
+    if($data['ext']){
+        return $data['ext'];
     }
     $mime = lib\Mime::load();
     $type = get_mime($url);
