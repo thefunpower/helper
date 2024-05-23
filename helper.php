@@ -140,9 +140,16 @@ function get_url_remove_http($url)
 }
 /**
 * 取后缀
+* add_action("get_ext_by_url",function($url){
+*    return 'pdf';
+* });
 */
 function get_ext_by_url($url)
 {
+    $hook = do_action("get_ext_by_url",$url);
+    if($hook){
+        return $hook;
+    }
     $mime = lib\Mime::load();
     $type = get_mime($url);
     if($type) {
