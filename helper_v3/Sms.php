@@ -31,6 +31,7 @@ class Sms
      */
     public static function send($phone, $content, $sign = null)
     {
+        do_action("sms.before");
         $sms_user = get_config('sms_user');
         $sms_pwd  = get_config('sms_pwd');
         $sms_ip   = get_config('sms_ip');
@@ -39,6 +40,7 @@ class Sms
         $res = $json = file_get_contents($url); 
         $res = json_decode($res, true);
         $msg = self::code()[$res['RetCode']];
+        do_action("sms.after",$res);
         if ($res['RetCode'] == 0) { 
             $ret = [
                 'code' => 0,
