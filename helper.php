@@ -213,6 +213,14 @@ function get_remote_file($url, $is_json = false)
     return $res;
 }
 /**
+ * 移除主域名部分
+ */
+function remove_host($url){
+    $url = substr($url,strpos($url,'://')+3);
+    $url = substr($url,strpos($url,'/'));
+    return $url;
+}
+/**
 * 下载文件
 * 建议使用 download_file_safe
 */
@@ -220,6 +228,10 @@ function download_file($url, $contain_http = false)
 {
     $host = cdn_url();
     if(strpos($url, "://") !== false) {
+        global $is_local;
+        if($is_local){
+            return remove_host($url);
+        }
         $url = download_remote_file($url);
         if($contain_http) {
             return $url;
