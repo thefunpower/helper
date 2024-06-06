@@ -1444,8 +1444,7 @@ function unzip_tar_zip_7z($input,$output_base = ''){
     	exec($cmd, $output, $return_var);
     	if ($return_var !== 0) {
             return json_error(['msg'=>'解压缩失败']);
-        } 
-    	file_put_contents('/www/wwwroot/printer.qihetaiji.com/public/uploads/tmp/unzip/log.txt',$cmd);
+        }     	
     	return $output_dir;
     }
 }
