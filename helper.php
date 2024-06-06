@@ -1410,7 +1410,45 @@ function copy_dir($source, $dest)
     }
     $dir->close();
 }
-
+/**
+* 解压zip、7z、gz、tar、bz2包
+* yum -y install p7zip unar unzip
+*/
+function unzip_tar_zip_7z($input,$output_base = ''){
+	$output_dir = $output_base.'/uploads/tmp/unzip/'.md5($input);
+	$ext = get_ext($input);
+	$cmd = "";
+	$tar = "tar -xvf ".$input." -C ".$output_dir;
+	create_dir_if_not_exists($output_dir);
+	switch($ext){
+	    case '7z':
+    		$cmd = "7za x ".$input." -o.".$output_dir;
+    		break;
+    	case 'zip':
+    		$cmd = "unzip ".$input." -d ".$output_dir;
+       		break;
+       	case 'rar':
+       		$cmd = "unar  ".$input." -o ".$output_dir;
+        	break;
+        case 'bz2':
+        	$cmd = $tar;
+        	break;
+        case 'gz':
+        	$cmd = $tar;
+        	break;
+        case 'tar':
+            $cmd = $tar;
+        	break; 
+	}
+    if($cmd){
+    	exec($cmd, $output, $return_var);
+    	if ($return_var !== 0) {
+            return json_error(['msg'=>'解压缩失败']);
+        } 
+    	file_put_contents('/www/wwwroot/printer.qihetaiji.com/public/uploads/tmp/unzip/log.txt',$cmd);
+    	return $output_dir;
+    }
+}
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
