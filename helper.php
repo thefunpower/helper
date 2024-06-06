@@ -1414,7 +1414,7 @@ function copy_dir($source, $dest)
 * 解压zip、7z、gz、tar、bz2包
 * yum -y install p7zip unar unzip
 */
-function unzip_tar_zip_7z($input,$output_base = ''){
+function unzip_tar($input,$output_base = ''){
 	$output_dir = $output_base.'/uploads/tmp/unzip/'.md5($input);
 	$ext = get_ext($input);
 	$cmd = "";
