@@ -1427,7 +1427,7 @@ function unzip_tar($input,$output_base = ''){
 	create_dir_if_not_exists($output_dir);
 	switch($ext){
 	    case '7z':
-    		$cmd = "7za x ".$input." -o.".$output_dir;
+    		$cmd = "7za x ".$input." -o".$output_dir;
     		break;
     	case 'zip':
     		$cmd = "unzip ".$input." -d ".$output_dir;
