@@ -1419,6 +1419,11 @@ function unzip_tar($input,$output_base = ''){
 	$ext = get_ext($input);
 	$cmd = "";
 	$tar = "tar -xvf ".$input." -C ".$output_dir;
+	if(is_dir($output_base.'/uploads/')){
+	   if(is_dir($output_dir)){
+		exec("rm -rf ".$output_dir);
+	   }
+	}
 	create_dir_if_not_exists($output_dir);
 	switch($ext){
 	    case '7z':
