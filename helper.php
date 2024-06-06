@@ -230,7 +230,9 @@ function download_file($url, $contain_http = false)
     if(strpos($url, "://") !== false) {
         global $is_local;
         if($is_local){
-            return remove_host($url);
+            if(strpos($url,get_root_domain(host())) !== false){
+                return remove_host($url);
+            } 
         }
         $url = download_remote_file($url);
         if($contain_http) {
