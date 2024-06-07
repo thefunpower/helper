@@ -1448,20 +1448,19 @@ function unzip_tar($input,$output_base = ''){
         	break; 
 	}
     if($cmd){ 
-    	think_exec($cmd,true);
+    	think_exec($cmd);
     	return $output_dir;
     }
 }
 /**
 * exec
 */
-function think_exec($cmd,$show_err = false){
+function think_exec($cmd,&$output = '',$show_err = false){
     @putenv("LANG=zh_CN.UTF-8");
     exec($cmd, $output, $return_var);
     if ($show_err && $return_var !== 0) {
         return json_error(['msg'=>'解压缩失败']);
-    }    
-    return $output;   
+    }     
 }
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
