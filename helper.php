@@ -1448,6 +1448,7 @@ function unzip_tar($input,$output_base = ''){
         	break; 
 	}
     if($cmd){
+	@putenv("LANG=zh_CN.UTF-8");
     	exec($cmd, $output, $return_var);
     	if ($return_var !== 0) {
             return json_error(['msg'=>'解压缩失败']);
