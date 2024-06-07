@@ -1256,7 +1256,7 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
                 unlink($file);
             }
             //删除目录
-            exec("rm -rf $tmp_path");
+            think_exec("rm -rf $tmp_path");
             break;
         case 'xml':
             $content = xml2array(file_get_contents($file));
@@ -1265,7 +1265,7 @@ function file_parse($file, $zip_output_dir = '', $need_remove = false)
         case 'pdf':
             create_dir_if_not_exists([$tmp_path]);
             $output_txt = $tmp_path.md5($file).'.txt';
-            exec("pdftotext -layout $file  $output_txt");
+            think_exec("pdftotext -layout $file  $output_txt");
             $res[$key] = file_get_contents($output_txt);
             unlink($output_txt);
             break;
@@ -1423,7 +1423,7 @@ function unzip_tar($input,$output_base = ''){
 	$tar = "tar -xvf ".$input." -C ".$output_dir;
 	if(is_dir($output_base.'/uploads/')){
 	   if(is_dir($output_dir)){
-		exec("rm -rf ".$output_dir);
+		think_exec("rm -rf ".$output_dir);
 	   }
 	}
 	create_dir_if_not_exists($output_dir);
@@ -1447,14 +1447,21 @@ function unzip_tar($input,$output_base = ''){
             $cmd = $tar;
         	break; 
 	}
-    if($cmd){
-	@putenv("LANG=zh_CN.UTF-8");
-    	exec($cmd, $output, $return_var);
-    	if ($return_var !== 0) {
-            return json_error(['msg'=>'解压缩失败']);
-        }     	
+    if($cmd){ 
+    	think_exec($cmd,true);
     	return $output_dir;
     }
+}
+/**
+* exec
+*/
+function think_exec($cmd,$show_err = false){
+    @putenv("LANG=zh_CN.UTF-8");
+    exec($cmd, $output, $return_var);
+    if ($show_err && $return_var !== 0) {
+        return json_error(['msg'=>'解压缩失败']);
+    }    
+    return $output;   
 }
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';

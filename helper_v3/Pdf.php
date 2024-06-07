@@ -11,7 +11,7 @@ class Pdf{
     public static function html_to_pdf($input_html_file,$output_pdf_file,$return_cmd = false,$exec = false){
         $cmd = "/usr/bin/xvfb-run  --server-args='-screen 0, 1024x768x24' /usr/bin/wkhtmltopdf --encoding utf-8 ".$input_html_file." ".$output_pdf_file. " 2>&1";
         if($exec){
-           exec($cmd); 
+           think_exec($cmd); 
         }
         if($return_cmd){
             return $cmd;
@@ -43,7 +43,7 @@ class Pdf{
         exec("pdftk --version",$out);
         if($out){
             $cmd = "pdftk $str cat output ".$new_file;
-            exec($cmd); 
+            think_exec($cmd); 
         } else{
             $merger = new Merger;
             $merger->addIterator($data);
@@ -111,7 +111,7 @@ class Pdf{
         if(!$is_wait){
             $cmd = $cmd." &";
         }
-        exec($cmd,$exec_output); 
+        think_exec($cmd,$exec_output); 
         return $output;
     }
     
@@ -200,7 +200,7 @@ class Pdf{
         for($i=1;$i<=$pages;$i++){
             $name = '/'.$md5.'-'.$i.'.jpg';  
             $cmd = "gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=png16m -r300 -dTextAlphaBits=4 -dGraphicsAlphaBits=4 -sOutputFile=".$saveToDir.$name." -dFirstPage=".$i." -dLastPage=".$i." ".$file." ";
-            exec($cmd);
+            think_exec($cmd);
             $files[] = $name;
         }   
         return $files;
@@ -230,7 +230,7 @@ class Pdf{
      */
     public static function get_info($file){ 
          $cmd = "pdftk ".$file." dump_data ";
-         exec($cmd,$out);
+         think_exec($cmd,$out);
          $output  = [];
          $new_arr = [];
          $j = -1;
@@ -268,7 +268,7 @@ class Pdf{
      */
     public  static function get_pages($file){
          $cmd = "pdftk ".$file." dump_data | grep NumberOfPages";
-         exec($cmd,$out);
+         think_exec($cmd,$out);
          if($out[0]){
             return trim(str_replace("NumberOfPages:","",$out[0]));   
          }else{
@@ -306,7 +306,7 @@ class Pdf{
             return;
         } 
         $cmd .= " ".$file."  -o  ".$output." &";
-        exec($cmd);
+        think_exec($cmd);
     } 
 
 }
