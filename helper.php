@@ -1459,9 +1459,23 @@ function think_exec($cmd,&$output = '',$show_err = false){
     @putenv("LANG=zh_CN.UTF-8");
     exec($cmd, $output, $return_var);
     if ($show_err && $return_var !== 0) {
-        return json_error(['msg'=>'解压缩失败']);
+        return json_error(['msg'=>'操作失败']);
     }     
 }
+/**
+* 文件软链接
+*/
+function exec_ln($ori_file,$new_file){
+   if(file_exists($new_file)){
+       return true;
+   }
+   if(file_exists($ori_file)){
+	$cmd = "ln -s ".$ori_file." ".$new_file;
+	think_exec($cmd);
+	return true;
+   }
+}
+
 include __DIR__.'/inc/x.php';
 include __DIR__.'/inc/sub_pub_js.php';
 include __DIR__.'/inc/array.php';
