@@ -632,6 +632,38 @@ helper_v3\Block::output();
 ?>
 ~~~
 
+## 天地图
+
+tianditu.gov.cn
+
+~~~
+set_config("tianditu","服务端key");
+pr(helper_v3\Map::get_lat('上海市襄阳公园'));
+pr(helper_v3\Map::get_address(31.218970,121.452340));
+~~~
+
+输出
+~~~
+Array
+(
+    [lat] => 31.218970
+    [lng] => 121.452340
+)
+Array
+(
+    [address] => 上海市徐汇区湖南路街道淮海中路1008号
+    [parse] => Array
+        (
+            [nation] => 中国
+            [province] => 上海市
+            [county] => 徐汇区
+            [address] => 淮海中路1008号
+        )
+
+)
+~~~
+
+
 
 ### 开源协议 
 
