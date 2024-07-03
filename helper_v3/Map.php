@@ -48,15 +48,17 @@ class Map{
 	/**
 	* 根据地址取lat lng
 	*/
-	public static function get_lat($address)
+	public static function get_lat($address,$convert = 'wgs84_gcj02')
 	{
 		$url = 'http://api.tianditu.gov.cn/geocoder?ds={"keyWord":"'.$address.'"}&tk='.self::get_tk();
 		$data = self::get($url);
 		if($data['status'] == 0){
-			$list = [
-				'lat'=>$data['location']['lat'],
-				'lng'=>$data['location']['lon'],
-			];
+			$lat = $data['location']['lat'];
+			$lng = $data['location']['lon']; 
+			$res = MapConvert::$convert($lat,$lng);
+			$list = [];
+			$list['lat'] = $res[0];
+			$list['lng'] = $res[1];
 			return $list;
 		}
 	}
