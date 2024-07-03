@@ -1,6 +1,7 @@
 <?php
 
 namespace helper_v3;
+
 /**
  * 地图坐标转换
  */
@@ -9,9 +10,11 @@ class MapConvert
     /**
     * 不转换坐标
     */
-    public static function none($lat,$lng){
-        return [$lat,$lng];
+    public static function none($lat, $lng)
+    {
+        return self::output($lat, $lng);
     }
+
     /**
      * CGCS2000（WGS84） 转成 GCJ02
      */
@@ -21,7 +24,7 @@ class MapConvert
         $a = 6378245.0;
         $ee = 0.00669342162296594323;
         if (self::out_of_china($lng, $lat)) {
-            return [$lat,$lng];
+            return self::output($lat, $lng);
         } else {
             $dlat = self::transformlat($lng - 105.0, $lat - 35.0);
             $dlng = self::transformlng($lng - 105.0, $lat - 35.0);
@@ -33,8 +36,16 @@ class MapConvert
             $dlng = ($dlng * 180.0) / ($a / $sqrtmagic * cos($radlat) * $PI);
             $mglat = $lat + $dlat;
             $mglng = $lng + $dlng;
-            return [$mglat,$mglng];
+            return self::output($mglat, $mglng);
         }
+    }
+
+    public static function output($lat, $lng)
+    {
+        return [
+           'lat' => round($lat, 6),
+           'lng' => round($lng, 6),
+        ];
     }
 
     public static function transformlat($x, $y)
